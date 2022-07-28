@@ -1,0 +1,40 @@
+import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+// ignore: depend_on_referenced_packages
+import 'package:google_sign_in/google_sign_in.dart';
+
+class GoogleSignInService {
+  static final GoogleSignIn googleSignIn = GoogleSignIn();
+  GoogleSignInService._();
+  static Future<UserCredential?> loginWithGoogle() async {
+    try {
+      final account = await googleSignIn.signIn();
+      if (account != null) {
+        final authentication = await account.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: authentication.accessToken,
+          idToken: authentication.idToken,
+        );
+
+        final authResult = await authService.loginWithCredential(credential);
+
+        return authResult;
+      }
+      return null;
+      //TODO: add firestore usermodel
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      // AppFunctions.handleAuthException(e.code);
+
+      return Future.error(e.message ?? e);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return Future.error(e);
+    }
+  }
+}
