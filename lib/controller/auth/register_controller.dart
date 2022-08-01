@@ -23,8 +23,9 @@ class RegisterController extends GetxController {
     // isLoading.value = false;
 
     if (AppFunctions.validateAndSaveForm(formKey)) {
-      final user =
-          await authService.register(email, password, username).then((value) {
+      final user = await authRepository
+          .register(email, password, username)
+          .then((value) {
         setIsLoading(false);
         return value;
       }).catchError((error, stackTrace) {

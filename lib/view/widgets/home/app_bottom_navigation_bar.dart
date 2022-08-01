@@ -17,18 +17,31 @@ class AppBottomNavigationBar extends StatelessWidget {
           currentIndex: controller.navBarCurrentIndex,
           onTap: controller.changeNavBarCurrentIndex,
           backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          // selectedIconTheme:
+          //     Get.theme.iconTheme.copyWith(color: Get.theme.primaryColor),
+          // unselectedIconTheme:
+          //     Get.theme.iconTheme.copyWith(color: Colors.black),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.explore_outlined),
               label: "Explore",
+              activeIcon: Icon(Icons.explore),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart_outlined),
+              activeIcon: Icon(Icons.shopping_cart_rounded),
               label: "Cart",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              label: "Search",
+              icon: Icon(Icons.favorite_outline_rounded),
+              activeIcon: Icon(Icons.favorite_rounded),
+              label: "Favorites",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline_rounded),
+              activeIcon: Icon(Icons.person_rounded),
+              label: "Account",
             ),
           ],
         );

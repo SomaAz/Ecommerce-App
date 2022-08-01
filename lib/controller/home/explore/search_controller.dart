@@ -41,7 +41,7 @@ class SearchController extends GetxController {
   RxList<ProductModel> searchedProducts = RxList();
 
   Future<void> getAllProducts() async {
-    products = await firestoreService.getAllProducts().onError(
+    products = await productsRepository.getAllProducts().onError(
       (error, stackTrace) {
         return [];
       },

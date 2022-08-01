@@ -19,7 +19,7 @@ class CategoryDetailsController extends GetxController {
   }
 
   Future<void> getProductsOfCategory() async {
-    products = await firestoreService
+    products = await productsRepository
         .getProductsOfCategory(category.id)
         .then((products) {
       return products;

@@ -24,15 +24,21 @@ class ProductCard extends StatelessWidget {
           children: [
             Flexible(
               flex: 2,
-              child: Hero(
-                tag: "image:${product.id}",
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.network(
-                    product.image,
-                    fit: BoxFit.fill,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Hero(
+                    tag: "image:${product.id}",
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        product.image,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
-                ),
+                  TagsBuilder(product.tags),
+                ],
               ),
             ),
             const GapH(4),
@@ -70,6 +76,45 @@ class ProductCard extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class TagsBuilder extends StatelessWidget {
+  const TagsBuilder(
+    this.tags, {
+    Key? key,
+  }) : super(key: key);
+
+  final List<String> tags;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Wrap(
+        spacing: 6,
+        children: List.generate(
+          tags.length,
+          (index) => Container(
+            decoration: BoxDecoration(
+              color: Colors.purple.shade300,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 4,
+              horizontal: 8,
+            ),
+            child: Text(
+              tags[index],
+              style: Get.textTheme.headline6!.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
         ),
       ),
     );

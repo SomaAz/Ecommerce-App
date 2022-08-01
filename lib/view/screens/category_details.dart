@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/controller/category_details_controller.dart';
+import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:ecommerce_getx/view/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,6 @@ class CategoryDetailsScreen extends StatelessWidget {
   const CategoryDetailsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final remainingScreenHeight =
-        Get.height - Get.height * .15 - Get.statusBarHeight;
-
     final controller = Get.find<CategoryDetailsController>();
     return Scaffold(
       body: RefreshIndicator(
@@ -67,7 +65,7 @@ class CustomSliverLayout extends StatelessWidget {
       slivers: [
         SliverAppBar(
           automaticallyImplyLeading: false,
-          expandedHeight: Get.height * .15,
+          expandedHeight: Get.height * .13,
           flexibleSpace: Column(
             children: [
               const Spacer(),

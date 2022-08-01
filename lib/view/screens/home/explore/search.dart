@@ -1,4 +1,4 @@
-import 'package:ecommerce_getx/controller/home/search_controller.dart';
+import 'package:ecommerce_getx/controller/home/explore/search_controller.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:ecommerce_getx/view/widgets/products_grid.dart';

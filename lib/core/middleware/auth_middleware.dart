@@ -1,3 +1,4 @@
+import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_getx/controller/auth/auth_controller.dart';
@@ -14,9 +15,9 @@ class AuthMiddleWare extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if (authController.user.value == null) {
-      return const RouteSettings(name: AppRoutes.login);
+    if (FirebaseAuthRepository.firebaseAuth.currentUser != null) {
+      return const RouteSettings(name: AppRoutes.home);
     }
-    return const RouteSettings(name: AppRoutes.home);
+    return const RouteSettings(name: AppRoutes.login);
   }
 }

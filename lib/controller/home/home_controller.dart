@@ -1,4 +1,7 @@
-import 'package:ecommerce_getx/view/screens/home/explore.dart';
+import 'package:ecommerce_getx/view/screens/home/account/account.dart';
+import 'package:ecommerce_getx/view/screens/home/cart/cart.dart';
+import 'package:ecommerce_getx/view/screens/home/explore/explore.dart';
+import 'package:ecommerce_getx/view/screens/home/favorites.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -8,8 +11,9 @@ class HomeController extends GetxController {
 
   static const _screens = [
     ExploreScreen(),
-    // ExploreScreen(),
-    // ExploreScreen(),
+    CartScreen(),
+    FavoritesScreen(),
+    AccountScreen(),
   ];
 
   Widget get currentScreen {

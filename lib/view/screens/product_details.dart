@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:ecommerce_getx/controller/product_details_controller.dart';
+import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,9 +29,16 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   shape: CircleBorder(),
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.star_outline),
+                  icon: GetBuilder<ProductDetailsController>(
+                      builder: (controller) {
+                    return Icon(
+                      controller.isFavorite ? Icons.star : Icons.star_outline,
+                    );
+                  }),
                   // color: Colors.white,
-                  onPressed: () {},
+                  onPressed: () async {
+                    await controller.toggleFavorite();
+                  },
                 ),
               ),
               const GapW(15),
@@ -145,19 +153,11 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 ),
               ],
             ),
-            MaterialButton(
-              onPressed: () {},
-              color: Get.theme.primaryColor,
-              textColor: Colors.white,
-              padding: EdgeInsets.symmetric(
-                horizontal: Get.width * .15,
-                vertical: 15,
-              ),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: const Text("Add"),
+            CustomButton(
+              text: "Add",
+              onPressed: () async {
+                await controller.addProductToCart();
+              },
             )
           ],
         ),

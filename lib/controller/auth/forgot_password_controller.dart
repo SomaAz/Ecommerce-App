@@ -15,7 +15,7 @@ class ForgotPasswordController extends GetxController {
     final email = emailController.text.trim();
 
     if (AppFunctions.validateAndSaveForm(formKey)) {
-      await authService.sendPasswordResetEmail(email).then((value) {
+      await authRepository.sendPasswordResetEmail(email).then((value) {
         Get.back();
         Get.snackbar(
           "Notice",

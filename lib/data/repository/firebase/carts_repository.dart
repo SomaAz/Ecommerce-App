@@ -1,0 +1,76 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/data/model/cart_product_model.dart';
+import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
+import 'package:get/get.dart';
+
+abstract class ProductsRepositoryBase {
+  Future<List<CartProductModel>> getAllCartProducts();
+  Future<void> addProductToCart(CartProductModel cartProductModel);
+  Future<void> incrementQuantity(CartProductModel cartProductModel);
+  Future<void> decrementQuantity(CartProductModel cartProductModel);
+  Future<void> deleteCartProduct(CartProductModel cartProductModel);
+}
+
+class CartsRepository extends ProductsRepositoryBase {
+  static final CartsRepository instance = CartsRepository._();
+  CartsRepository._();
+  final uid = FirebaseAuthRepository.firebaseAuth.currentUser!.uid;
+
+  late final _cartCollection =
+      firestore.collection("users").doc(uid).collection("cart");
+
+  @override
+  Future<List<CartProductModel>> getAllCartProducts() async {
+    final snapshot = await _cartCollection.orderBy("name").get();
+
+    final docs = snapshot.docs;
+
+    final products =
+        docs.map((doc) => CartProductModel.fromMap(doc.data())).toList();
+
+    return products;
+  }
+
+  @override
+  Future<void> addProductToCart(CartProductModel cartProductModel) async {
+    final mapModel = cartProductModel.toMap();
+
+    final ref = _cartCollection.doc(cartProductModel.id.trim());
+
+    final snapshot = await ref.get();
+    if (snapshot.exists) {
+      Get.snackbar("Alert", "Product Is Already Added To Cart");
+    } else {
+      await ref.set(mapModel);
+      Get.snackbar("Success", "Product Has Been Added To Cart");
+    }
+  }
+
+  @override
+  Future<void> incrementQuantity(CartProductModel cartProductModel) async {
+    final docRef = _cartCollection.doc(cartProductModel.id.trim());
+    await docRef.update({"quantity": FieldValue.increment(1)});
+
+    cartProductModel.quantity += 1;
+  }
+
+  @override
+  Future<void> decrementQuantity(CartProductModel cartProductModel) async {
+    final docRef = _cartCollection.doc(cartProductModel.id.trim());
+    if (cartProductModel.quantity > 1) {
+      // if ((await docRef.get()).data()!['quantity'] > 1) {
+      await docRef.update(
+        {"quantity": FieldValue.increment(-1)},
+      );
+
+      cartProductModel.quantity -= 1;
+    }
+    // }
+  }
+
+  @override
+  Future<void> deleteCartProduct(CartProductModel cartProductModel) async {
+    await _cartCollection.doc(cartProductModel.id.trim()).delete();
+  }
+}

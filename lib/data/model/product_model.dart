@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProductModel {
@@ -12,6 +13,7 @@ class ProductModel {
   final String brand;
   final List<String> sizes;
   final List<String> tags;
+  List<String> favorites;
   final List<Color> colors;
   final double price;
 
@@ -24,6 +26,7 @@ class ProductModel {
     required this.image,
     required this.brand,
     required this.sizes,
+    required this.favorites,
     required this.tags,
     required this.colors,
     required this.price,
@@ -38,6 +41,7 @@ class ProductModel {
     String? image,
     String? brand,
     List<String>? sizes,
+    List<String>? favorites,
     List<String>? tags,
     List<Color>? colors,
     double? price,
@@ -51,6 +55,7 @@ class ProductModel {
       image: image ?? this.image,
       brand: brand ?? this.brand,
       sizes: sizes ?? this.sizes,
+      favorites: favorites ?? this.favorites,
       tags: tags ?? this.tags,
       colors: colors ?? this.colors,
       price: price ?? this.price,
@@ -67,6 +72,7 @@ class ProductModel {
       'brand': brand,
       'image': image,
       'sizes': sizes,
+      'favorites': favorites,
       'tags': tags,
       'colors': colors.map((e) => e.value).toList(),
       'price': price,
@@ -83,6 +89,7 @@ class ProductModel {
       brand: map['brand'] ?? '',
       image: map['image'] ?? '',
       sizes: List.from(map['sizes'] ?? []),
+      favorites: List.from(map['favorites'] ?? []),
       tags: List.from(map['tags'] ?? []),
       colors: List<int>.from(map['colors'] ?? [])
           .map((colornum) => Color(colornum))
@@ -96,9 +103,19 @@ class ProductModel {
   factory ProductModel.fromJson(String source) =>
       ProductModel.fromMap(json.decode(source));
 
+  CartProductModel toCartProductModel() {
+    return CartProductModel(
+      id: id,
+      name: name,
+      image: image,
+      price: price,
+      quantity: 1,
+    );
+  }
+
   @override
   String toString() {
-    return 'ProductModel(id: $id, name: $name, description: $description, brand: $brand, category: $category, categoryName: $categoryName, image: $image, price: $price, sizes: $sizes, tags: $tags, colors: $colors)';
+    return 'ProductModel(id: $id, name: $name, description: $description, brand: $brand, category: $category, categoryName: $categoryName, image: $image, price: $price, sizes: $sizes, favorites: $favorites, tags: $tags, colors: $colors)';
   }
 
   @override
@@ -114,6 +131,7 @@ class ProductModel {
         other.image == image &&
         other.brand == brand &&
         other.sizes == sizes &&
+        other.favorites == favorites &&
         other.tags == tags &&
         other.colors == colors &&
         other.price == price;
@@ -130,6 +148,7 @@ class ProductModel {
         brand.hashCode ^
         tags.hashCode ^
         sizes.hashCode ^
+        favorites.hashCode ^
         colors.hashCode ^
         price.hashCode;
   }

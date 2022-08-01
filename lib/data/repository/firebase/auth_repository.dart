@@ -6,7 +6,7 @@ import 'package:ecommerce_getx/core/functions/functions.dart';
 
 // const String apiKey = "AIzaSyD5kS3982ha9BbQ3J7A-5g40T2Z_tuoxUw";
 
-abstract class FirebaseAuthServiceBase {
+abstract class FirebaseAuthRepositoryBase {
   Future<User?> login(String email, String password);
   Future<User?> register(String email, String password, String username);
   Future<void> sendPasswordResetEmail(String email);
@@ -15,12 +15,12 @@ abstract class FirebaseAuthServiceBase {
   Future<void> deleteUser(String email, String password);
 }
 
-class FirebaseAuthService extends FirebaseAuthServiceBase {
+class FirebaseAuthRepository extends FirebaseAuthRepositoryBase {
   static final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  static final FirebaseAuthService instance = FirebaseAuthService._();
+  static final FirebaseAuthRepository instance = FirebaseAuthRepository._();
 
-  FirebaseAuthService._();
+  FirebaseAuthRepository._();
 
   @override
   Future<User?> login(String email, String password) async {
@@ -58,21 +58,21 @@ class FirebaseAuthService extends FirebaseAuthServiceBase {
       var user = credential.user;
       if (user != null) {
         user.updateDisplayName(username);
+
+        UserModel userModel = UserModel(
+          id: user.uid,
+          username: username,
+          email: email,
+          image: "",
+        );
+
+        await usersRepository.addUserToFirestore(userModel).onError(
+          (error, stackTrace) {
+            deleteUser(email, password);
+            user = null;
+          },
+        );
       }
-
-      UserModel userModel = UserModel(
-        id: "",
-        username: username,
-        email: email,
-        image: "",
-      );
-
-      await firestoreService.addUserToFirestore(userModel).onError(
-        (error, stackTrace) {
-          deleteUser(email, password);
-          user = null;
-        },
-      );
       return user;
     } on FirebaseAuthException catch (e) {
       AppFunctions.handleAuthException(e.code);

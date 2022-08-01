@@ -1,4 +1,8 @@
+import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
+import 'package:ecommerce_getx/controller/home/favorites_controller.dart';
+import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
+import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +13,8 @@ class ProductDetailsController extends GetxController {
   ProductDetailsController() : product = Get.arguments {
     if (product.sizes.isNotEmpty) selectedSize = product.sizes[0].obs;
     if (product.colors.isNotEmpty) selectedColor = product.colors[0].obs;
+    // isFavorite = product.favorites
+    //     .contains(FirebaseAuthRepository.firebaseAuth.currentUser!.uid);
   }
 
   //! That's Not A Real Part Of The App
@@ -19,16 +25,30 @@ class ProductDetailsController extends GetxController {
   late Rx<String> selectedSize;
   late Rx<Color> selectedColor;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
-
   void changeSelectedSize(String? size) {
     if (size != null) selectedSize.value = size;
   }
 
   void changeSelectedColor(Color? color) {
     if (color != null) selectedColor.value = color;
+  }
+
+  bool get isFavorite {
+    return product.favorites
+        .contains(FirebaseAuthRepository.firebaseAuth.currentUser!.uid);
+  }
+
+  Future<void> toggleFavorite() async {
+    await favoritesRepository.toggleFavorite(product).then((value) {
+      Get.find<FavoritesController>().refreshData();
+      update();
+    });
+  }
+
+  Future<void> addProductToCart() async {
+    await cartsRepository.addProductToCart(product.toCartProductModel());
+
+    //? Refresh Data In The Cart Screen
+    await Get.find<CartController>().refreshData();
   }
 }

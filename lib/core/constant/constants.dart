@@ -1,8 +1,25 @@
-import 'package:ecommerce_getx/data/service/firebase/auth_service.dart';
-import 'package:ecommerce_getx/data/service/firebase/firestore_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
+import 'package:ecommerce_getx/data/repository/firebase/carts_repository.dart';
+import 'package:ecommerce_getx/data/repository/firebase/categories_repository.dart';
+import 'package:ecommerce_getx/data/repository/firebase/favorites_repository.dart';
+import 'package:ecommerce_getx/data/repository/firebase/products_repository.dart';
+import 'package:ecommerce_getx/data/repository/firebase/shipping_address_repository.dart';
+import 'package:ecommerce_getx/data/repository/firebase/users_repository.dart';
 import 'package:get/get.dart';
 
-final FirebaseAuthService authService = FirebaseAuthService.instance;
-final FirestoreService firestoreService = FirestoreService.instance;
+final FirebaseAuthRepository authRepository = FirebaseAuthRepository.instance;
+// final FirestoreService firestoreService = FirestoreService.instance;
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+final UsersRepository usersRepository = UsersRepository.instance;
+final ProductsRepository productsRepository = ProductsRepository.instance;
+final CategoriesRepository categoriesRepository = CategoriesRepository.instance;
+final CartsRepository cartsRepository = CartsRepository.instance;
+final ShippingAddressRepository shippingAdressRepository =
+    ShippingAddressRepository.instance;
+final FavoritesRepository favoritesRepository = FavoritesRepository.instance;
 
 double get productCardHeight => (Get.height * .3);
+
+final remainingScreenHeight =
+    Get.height - Get.height * .15 - Get.statusBarHeight;

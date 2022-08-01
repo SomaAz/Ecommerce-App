@@ -21,7 +21,7 @@ class LoginController extends GetxController {
     if (AppFunctions.validateAndSaveForm(formKey)) {
       User? user;
 
-      user = await authService.login(email, password).then((value) {
+      user = await authRepository.login(email, password).then((value) {
         setIsLoading(false);
         return value;
       }).catchError((error, stackTrace) {

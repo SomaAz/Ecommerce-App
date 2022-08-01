@@ -31,17 +31,24 @@ class MyApp extends StatelessWidget {
         colorScheme: const ColorScheme.light(primary: Color(0xFF00c569)),
         fontFamily: "opensans",
         scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           elevation: 0,
           color: Colors.white,
           foregroundColor: Colors.black,
+          titleTextStyle:
+              Get.textTheme.headline3!.copyWith(fontWeight: FontWeight.w500),
           centerTitle: true,
-          systemOverlayStyle: SystemUiOverlayStyle(
+          systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.dark,
           ),
         ),
         textTheme: const TextTheme(
+          headline1: TextStyle(
+            fontSize: 30,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
           headline2: TextStyle(
             fontSize: 26,
             color: Colors.black,
@@ -59,6 +66,11 @@ class MyApp extends StatelessWidget {
           ),
           headline5: TextStyle(
             fontSize: 16,
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+          ),
+          headline6: TextStyle(
+            fontSize: 15,
             color: Colors.black,
             fontWeight: FontWeight.w400,
           ),

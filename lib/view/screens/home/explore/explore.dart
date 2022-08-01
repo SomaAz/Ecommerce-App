@@ -1,4 +1,4 @@
-import 'package:ecommerce_getx/controller/home/explore_controller.dart';
+import 'package:ecommerce_getx/controller/home/explore/explore_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
@@ -90,6 +90,7 @@ class _BestSellingSection extends GetView<ExploreController> {
               return ListView.separated(
                 padding: const EdgeInsets.only(left: 15),
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: controller.bestSellingProducts.length,
                 separatorBuilder: (context, index) {
@@ -125,6 +126,7 @@ class _CategoriesSection extends StatelessWidget {
             return ListView.builder(
               padding: const EdgeInsets.only(left: 15),
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: controller.categories.length,
               itemBuilder: (context, index) {

@@ -1,11 +1,11 @@
+import 'package:ecommerce_getx/controller/home/explore/explore_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
-import 'package:ecommerce_getx/data/model/categoy_model.dart';
+import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:get/get.dart';
 
-class ExploreController extends GetxController {
-  List<CategoryModel> categories = [];
-  List<ProductModel> bestSellingProducts = [];
+class FavoritesController extends GetxController {
+  List<ProductModel> favoritedProducts = [];
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -23,35 +23,34 @@ class ExploreController extends GetxController {
   //   update();
   // }
 
-  Future<void> getAllCategories() async {
-    categories = await firestoreService.getAllCategories().onError(
+  Future<void> getFavoritedProducts() async {
+    favoritedProducts =
+        await favoritesRepository.getAllFavoritedProducts().onError(
       (error, stackTrace) {
         return [];
       },
     );
   }
 
-  Future<void> getBestSellingProducts() async {
-    bestSellingProducts = await firestoreService.getAllProducts().onError(
-      (error, stackTrace) {
-        return [];
+  Future<void> deleteProductFromFavorites(ProductModel productModel) async {
+    await favoritesRepository.deleteProductFromFavorites(productModel).then(
+      (value) {
+        favoritedProducts.remove(productModel);
+        update();
+        Get.find<ExploreController>().refreshData();
       },
     );
   }
 
   Future<void> loadData() async {
     setIsLoading(true);
-    await getAllCategories();
-    await getBestSellingProducts();
+    await getFavoritedProducts();
     setIsLoading(false);
   }
 
   Future<void> refreshData() async {
-    // setIsRefreshing(true);
-    await getAllCategories();
-    await getBestSellingProducts();
+    await getFavoritedProducts();
     update();
-    // setIsRefreshing(false);
   }
 
   @override

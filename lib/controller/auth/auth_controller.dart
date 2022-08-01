@@ -1,24 +1,30 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
-import 'package:ecommerce_getx/data/service/google_sign_in/google_sign_in_service.dart';
+import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
+import 'package:ecommerce_getx/data/repository/google_sign_in/google_sign_in_service.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
-import 'package:ecommerce_getx/data/service/firebase/auth_service.dart';
 
 class AuthController extends GetxController {
-  Rx<User?> user = FirebaseAuthService.firebaseAuth.currentUser.obs;
+  late Rx<User?> user = Rx(null);
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 
   @override
   void onReady() {
-    user.bindStream(FirebaseAuthService.firebaseAuth.authStateChanges());
+    user.bindStream(FirebaseAuthRepository.firebaseAuth.authStateChanges());
+    ever(user, (_) => update());
     super.onInit();
   }
 
   Future<void> signOut() async {
-    await authService.signOut();
+    await authRepository.signOut();
     if (user.value == null) {
       Get.offNamed(AppRoutes.login);
     }
