@@ -22,7 +22,6 @@ class OrdersRepository extends OrdersRepositoryBase {
     final docRef = _ordersCollection.doc();
 
     final addedData = order.toMap();
-    addedData['timeOrdered'] = Timestamp.now();
     addedData['id'] = docRef.id;
 
     await docRef.set(addedData);

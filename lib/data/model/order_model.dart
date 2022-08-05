@@ -59,13 +59,13 @@ class OrderModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'status': status,
+      'status': status.name,
       'shippingAddress': shippingAddress.toMap(),
       'paymentCard': paymentCard.toMap(),
       'timeOrdered': timeOrdered,
       'number': number,
       'price': price,
-      'deliveryType': deliveryType,
+      'deliveryType': deliveryType.name,
       'products': products.map((product) => product.toMap()).toList(),
     };
   }
@@ -73,13 +73,15 @@ class OrderModel {
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       id: map['id'] ?? '',
-      status: map['status'],
+      status: OrderStatus.values
+          .firstWhere((status) => status.name == map['status']),
       shippingAddress: ShippingAddressModel.fromMap(map['shippingAddress']),
       paymentCard: CardModel.fromMap(map['paymentCard']),
       timeOrdered: map['timeOrdered'],
       number: map['number']?.toInt() ?? 0,
       price: map['price']?.toDouble() ?? 0.0,
-      deliveryType: map['deliveryType'],
+      deliveryType: DeliveryType.values
+          .firstWhere((type) => type.name == map['deliveryType']),
       products: List<CartProductModel>.from(
         map['products']?.map((x) => CartProductModel.fromMap(x)),
       ),

@@ -1,5 +1,8 @@
 enum OrderStatus {
-  processing,
-  delivered,
-  canceld,
+  processing("processing"),
+  delivered("delivered"),
+  canceld("canceld");
+
+  const OrderStatus(this.name);
+  final String name;
 }

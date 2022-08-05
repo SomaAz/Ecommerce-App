@@ -127,12 +127,14 @@ class CheckoutScreen extends StatelessWidget {
                   const GapH(10),
                   SizedBox(
                     width: double.infinity,
-                    child: CustomButton(
-                      text: "Place Order",
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.checkout);
-                      },
-                    ),
+                    child: controller.isPlacingOrderLoading
+                        ? const Loading()
+                        : CustomButton(
+                            text: "Place Order",
+                            onPressed: () {
+                              controller.placeOrder();
+                            },
+                          ),
                   ),
                 ],
               ),

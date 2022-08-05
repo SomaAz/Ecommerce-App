@@ -35,7 +35,7 @@ class CategoryCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: SvgPicture.asset("assets/images/shoes_cat.svg"),
+                child: Image.network(category.image),
               ),
             ),
           ),

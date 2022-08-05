@@ -10,15 +10,17 @@ abstract class ProductsRepositoryBase {
   Future<void> incrementQuantity(CartProductModel cartProductModel);
   Future<void> decrementQuantity(CartProductModel cartProductModel);
   Future<void> deleteCartProduct(CartProductModel cartProductModel);
+  Future<void> clearProducts();
 }
 
 class CartsRepository extends ProductsRepositoryBase {
   static final CartsRepository instance = CartsRepository._();
   CartsRepository._();
-  final uid = FirebaseAuthRepository.firebaseAuth.currentUser!.uid;
 
-  late final _cartCollection =
-      firestore.collection("users").doc(uid).collection("cart");
+  final _cartCollection = firestore
+      .collection("users")
+      .doc(FirebaseAuthRepository.firebaseAuth.currentUser!.uid)
+      .collection("cart");
 
   @override
   Future<List<CartProductModel>> getAllCartProducts() async {
@@ -72,5 +74,15 @@ class CartsRepository extends ProductsRepositoryBase {
   @override
   Future<void> deleteCartProduct(CartProductModel cartProductModel) async {
     await _cartCollection.doc(cartProductModel.id.trim()).delete();
+  }
+
+  @override
+  Future<void> clearProducts() async {
+    final snapshot = await _cartCollection.get();
+    final batch = firestore.batch();
+    for (final doc in snapshot.docs) {
+      batch.delete(doc.reference);
+    }
+    await batch.commit();
   }
 }

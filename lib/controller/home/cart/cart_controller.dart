@@ -57,6 +57,13 @@ class CartController extends GetxController {
     );
   }
 
+  Future<void> clearCartProducts() async {
+    await cartsRepository.clearProducts().then((value) {
+      cartProducts.clear();
+      update();
+    });
+  }
+
   Future<void> loadData() async {
     setIsLoading(true);
     await getCartProducts();

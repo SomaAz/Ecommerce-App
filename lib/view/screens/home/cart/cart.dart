@@ -77,7 +77,10 @@ class CartScreen extends StatelessWidget {
                 onPressed: () {
                   Get.toNamed(
                     AppRoutes.checkout,
-                    arguments: {"price": controller.totalPrice},
+                    arguments: {
+                      "price": controller.totalPrice,
+                      "products": controller.cartProducts,
+                    },
                   );
                 },
               ),
