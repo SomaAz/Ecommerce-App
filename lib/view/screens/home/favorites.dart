@@ -1,10 +1,4 @@
-import 'dart:async';
-
-import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
 import 'package:ecommerce_getx/controller/home/favorites_controller.dart';
-import 'package:ecommerce_getx/data/model/cart_product_model.dart';
-import 'package:ecommerce_getx/view/widgets/cart_product_card.dart';
-import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/favorited_product_card.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';

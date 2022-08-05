@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_getx/core/service/app_service.dart';
+import 'dart:math' as math;
 
 enum ValidatedInputType {
   email,
@@ -128,5 +129,19 @@ class AppFunctions {
       isEmailVerification: isEmailVerification,
       email: email,
     ));
+  }
+
+  static String splitCardNumber(String cardNumber) {
+    final newCardNumber = cardNumber.trim().replaceAll(" ", "");
+    String newStr = '';
+    const step = 4;
+
+    for (var i = 0; i < newCardNumber.length; i += step) {
+      newStr +=
+          newCardNumber.substring(i, math.min(i + step, newCardNumber.length));
+      if (i + step < newCardNumber.length) newStr += ' ';
+    }
+
+    return newStr;
   }
 }

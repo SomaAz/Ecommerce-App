@@ -1,3 +1,5 @@
+import 'package:ecommerce_getx/controller/home/account/cards_controller.dart';
+import 'package:ecommerce_getx/controller/home/account/new_card_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/new_shipping_address_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/shipping_address_controller.dart';
 import 'package:ecommerce_getx/controller/category_details_controller.dart';
@@ -7,8 +9,10 @@ import 'package:ecommerce_getx/controller/product_details_controller.dart';
 import 'package:ecommerce_getx/controller/auth/forgot_password_controller.dart';
 import 'package:ecommerce_getx/controller/auth/login_controller.dart';
 import 'package:ecommerce_getx/controller/auth/register_controller.dart';
-import 'package:ecommerce_getx/view/screens/home/account/new_shipping_address.dart';
-import 'package:ecommerce_getx/view/screens/home/account/shipping_address.dart';
+import 'package:ecommerce_getx/view/screens/home/account/cards/cards.dart';
+import 'package:ecommerce_getx/view/screens/home/account/cards/new_card.dart';
+import 'package:ecommerce_getx/view/screens/home/account/shipping/new_shipping_address.dart';
+import 'package:ecommerce_getx/view/screens/home/account/shipping/shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/screens/home/cart/checkout/checkout.dart';
 import 'package:ecommerce_getx/view/screens/home/explore/search.dart';
@@ -42,6 +46,8 @@ class AppRoutes {
   //?Account
   static const shippingAddress = '/shipping-address';
   static const newShippingAddress = '/new-shipping-address';
+  static const cards = '/cards';
+  static const newCard = '/new-card';
 
   const AppRoutes._();
 
@@ -99,8 +105,18 @@ class AppRoutes {
     ),
     GetPage(
       name: checkout,
-      page: () => CheckoutScreen(),
+      page: () => const CheckoutScreen(),
       binding: BindingsBuilder.put(() => CheckoutController()),
+    ),
+    GetPage(
+      name: cards,
+      page: () => const CardsScreen(),
+      binding: BindingsBuilder.put(() => CardsController()),
+    ),
+    GetPage(
+      name: newCard,
+      page: () => const NewCardScreen(),
+      binding: BindingsBuilder.put(() => NewCardController()),
     ),
     // GetPage(
     //   name: cart,

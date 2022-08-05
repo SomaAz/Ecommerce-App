@@ -6,9 +6,13 @@ class CustomTextFormField extends StatelessWidget {
   final IconData? icon;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final void Function(String)? onChange;
   final bool obscureText;
   final TextInputType? keyboardType;
   final void Function()? onTapIcon;
+  final int? maxLength;
+  final int? maxLines;
+  final EdgeInsetsGeometry? padding;
 
   const CustomTextFormField({
     Key? key,
@@ -21,6 +25,10 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType,
     this.onTapIcon,
+    this.maxLength,
+    this.maxLines,
+    this.padding,
+    this.onChange,
   }) : super(key: key);
 
   @override
@@ -30,9 +38,12 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       controller: controller,
+      maxLength: maxLength,
+      maxLines: maxLines,
+      onChanged: onChange,
       decoration: InputDecoration(
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            padding ?? const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         label: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -48,6 +59,7 @@ class CustomTextFormField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        counterText: "",
       ),
     );
   }

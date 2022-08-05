@@ -12,11 +12,6 @@ class AuthController extends GetxController {
   late Rx<User?> user = Rx(null);
 
   @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
   void onReady() {
     user.bindStream(FirebaseAuthRepository.firebaseAuth.authStateChanges());
     ever(user, (_) => update());

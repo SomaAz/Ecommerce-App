@@ -69,7 +69,7 @@ class AccountScreen extends StatelessWidget {
                 _AccountListTile(
                   imageName: "Icon_Payment",
                   onTap: () {
-                    // Get.toNamed(AppRoutes.shippingAddress);
+                    Get.toNamed(AppRoutes.cards);
                   },
                   title: 'Cards',
                 ),

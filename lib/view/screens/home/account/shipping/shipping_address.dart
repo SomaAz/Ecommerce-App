@@ -4,6 +4,7 @@ import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/data/model/shipping_address_model.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
+import 'package:ecommerce_getx/view/widgets/custom_radio.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class ShippingAddressScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (_, __) => const GapH(40),
                   itemBuilder: (context, index) {
-                    return ShippingAddressCard(
+                    return ShippingAddressCardRadio(
                       controller.addresses[index],
                       onChanged: controller.setSelectedAddress,
                       selectedAddress: controller.selectedAddress,
@@ -69,18 +70,32 @@ class ShippingAddressScreen extends StatelessWidget {
       bottomNavigationBar:
           GetBuilder<ShippingAddressController>(builder: (controller) {
         if (controller.addresses.isEmpty) return const Gap();
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CustomButton(
-                text: "New",
-                onPressed: () {
-                  Get.toNamed(AppRoutes.newShippingAddress);
-                },
-              ),
-            ],
+        return SizedBox(
+          height: Get.statusBarHeight,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: Get.previousRoute == AppRoutes.checkout
+                ? Center(
+                    child: CustomButton(
+                      text: "Select",
+                      onPressed: () {
+                        Get.back(result: controller.selectedAddress);
+                      },
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CustomButton(
+                        text: "New",
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.newShippingAddress);
+                        },
+                      ),
+                    ],
+                  ),
           ),
         );
       }),
@@ -88,8 +103,8 @@ class ShippingAddressScreen extends StatelessWidget {
   }
 }
 
-class ShippingAddressCard extends StatelessWidget {
-  const ShippingAddressCard(
+class ShippingAddressCardRadio extends StatelessWidget {
+  const ShippingAddressCardRadio(
     this.address, {
     required this.onChanged,
     required this.selectedAddress,
@@ -103,23 +118,7 @@ class ShippingAddressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                address.name,
-                style: Get.textTheme.headline3,
-              ),
-              const GapH(6),
-              Text(
-                "${address.street}, ${address.city}, ${address.state}, ${address.country}",
-                style: Get.textTheme.bodyText1!
-                    .copyWith(color: Colors.black, height: 1.6),
-              ),
-            ],
-          ),
-        ),
+        ShippingAddressCard(address),
         const GapW(30),
         CustomRadio<ShippingAddressModel>(
           value: address,
@@ -132,26 +131,30 @@ class ShippingAddressCard extends StatelessWidget {
   }
 }
 
-class CustomRadio<T> extends StatelessWidget {
-  final T value;
-  final T groupValue;
-  final void Function(T value) onChanged;
-
-  const CustomRadio({
+class ShippingAddressCard extends StatelessWidget {
+  const ShippingAddressCard(
+    this.address, {
     Key? key,
-    required this.value,
-    required this.groupValue,
-    required this.onChanged,
   }) : super(key: key);
 
+  final ShippingAddressModel address;
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () => onChanged(value),
-      icon: Icon(
-        value == groupValue ? Icons.check_circle : Icons.circle,
-        color: value == groupValue ? Get.theme.primaryColor : Colors.grey,
-        size: 26,
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            address.name,
+            style: Get.textTheme.headline4,
+          ),
+          const GapH(6),
+          Text(
+            "${address.street}, ${address.city}, ${address.state}, ${address.country}",
+            style: Get.textTheme.bodyText1!
+                .copyWith(color: Colors.black, height: 1.6),
+          ),
+        ],
       ),
     );
   }

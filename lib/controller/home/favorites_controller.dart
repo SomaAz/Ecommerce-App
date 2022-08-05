@@ -1,6 +1,5 @@
 import 'package:ecommerce_getx/controller/home/explore/explore_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
-import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:get/get.dart';
 

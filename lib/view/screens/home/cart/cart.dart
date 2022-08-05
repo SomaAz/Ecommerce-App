@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
-import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/view/widgets/cart_product_card.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
@@ -78,7 +75,10 @@ class CartScreen extends StatelessWidget {
               CustomButton(
                 text: "Checkout",
                 onPressed: () {
-                  Get.toNamed(AppRoutes.checkout);
+                  Get.toNamed(
+                    AppRoutes.checkout,
+                    arguments: {"price": controller.totalPrice},
+                  );
                 },
               ),
             ],

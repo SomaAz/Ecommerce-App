@@ -25,7 +25,6 @@ class NewShippingAddressController extends GetxController {
   Future<void> addAddress() async {
     if (formKey.currentState!.validate()) {
       setIsLoading(true);
-      await Future.delayed(const Duration(seconds: 1));
       await _addAddress();
       await Get.find<ShippingAddressController>().refreshData();
       Get.back();

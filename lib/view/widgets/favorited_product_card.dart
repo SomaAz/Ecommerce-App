@@ -1,4 +1,3 @@
-import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:flutter/material.dart';
