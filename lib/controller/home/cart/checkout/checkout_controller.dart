@@ -105,7 +105,7 @@ class CheckoutController extends GetxController {
       deliveryType: _selectedDeliveryType,
       products: _orderedProducts,
     );
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     await ordersRepository.placeOrder(orderModel);
   }
 

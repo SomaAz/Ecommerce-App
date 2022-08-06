@@ -140,22 +140,20 @@ class ShippingAddressCard extends StatelessWidget {
   final ShippingAddressModel address;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            address.name,
-            style: Get.textTheme.headline4,
-          ),
-          const GapH(6),
-          Text(
-            "${address.street}, ${address.city}, ${address.state}, ${address.country}",
-            style: Get.textTheme.bodyText1!
-                .copyWith(color: Colors.black, height: 1.6),
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          address.name,
+          style: Get.textTheme.headline4,
+        ),
+        const GapH(6),
+        Text(
+          "${address.street}, ${address.city}, ${address.state}, ${address.country}",
+          style: Get.textTheme.bodyText1!
+              .copyWith(color: Colors.black, height: 1.6),
+        ),
+      ],
     );
   }
 }

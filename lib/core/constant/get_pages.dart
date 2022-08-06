@@ -1,6 +1,8 @@
 import 'package:ecommerce_getx/controller/home/account/cards_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/new_card_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/new_shipping_address_controller.dart';
+import 'package:ecommerce_getx/controller/home/account/order_details_controller.dart';
+import 'package:ecommerce_getx/controller/home/account/orders_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/shipping_address_controller.dart';
 import 'package:ecommerce_getx/controller/category_details_controller.dart';
 import 'package:ecommerce_getx/controller/home/cart/checkout/checkout_controller.dart';
@@ -11,6 +13,8 @@ import 'package:ecommerce_getx/controller/auth/login_controller.dart';
 import 'package:ecommerce_getx/controller/auth/register_controller.dart';
 import 'package:ecommerce_getx/view/screens/home/account/cards/cards.dart';
 import 'package:ecommerce_getx/view/screens/home/account/cards/new_card.dart';
+import 'package:ecommerce_getx/view/screens/home/account/orders/order_details.dart';
+import 'package:ecommerce_getx/view/screens/home/account/orders/orders.dart';
 import 'package:ecommerce_getx/view/screens/home/account/shipping/new_shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/home/account/shipping/shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
@@ -43,11 +47,13 @@ class AppRoutes {
   //?Details Screens
   static const categoryDetails = "/category-details";
   static const productDetails = "/product-details";
+  static const orderDetails = "/order-details";
   //?Account
   static const shippingAddress = '/shipping-address';
   static const newShippingAddress = '/new-shipping-address';
   static const cards = '/cards';
   static const newCard = '/new-card';
+  static const orders = '/orders';
 
   const AppRoutes._();
 
@@ -117,6 +123,16 @@ class AppRoutes {
       name: newCard,
       page: () => const NewCardScreen(),
       binding: BindingsBuilder.put(() => NewCardController()),
+    ),
+    GetPage(
+      name: orders,
+      page: () => const OrdersScreen(),
+      binding: BindingsBuilder.put(() => OrdersController()),
+    ),
+    GetPage(
+      name: orderDetails,
+      page: () => const OrderDetailsScreen(),
+      binding: BindingsBuilder.put(() => OrderDetailsController()),
     ),
     // GetPage(
     //   name: cart,

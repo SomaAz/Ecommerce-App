@@ -29,7 +29,8 @@ class OrdersRepository extends OrdersRepositoryBase {
 
   @override
   Future<List<OrderModel>> getAllOrders() async {
-    final snapshot = await _ordersCollection.orderBy("timeOrdered").get();
+    final snapshot =
+        await _ordersCollection.orderBy("timeOrdered", descending: true).get();
 
     final orders =
         snapshot.docs.map((doc) => OrderModel.fromMap(doc.data())).toList();

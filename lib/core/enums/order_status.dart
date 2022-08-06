@@ -1,8 +1,11 @@
-enum OrderStatus {
-  processing("processing"),
-  delivered("delivered"),
-  canceld("canceld");
+import 'package:flutter/material.dart';
 
-  const OrderStatus(this.name);
+enum OrderStatus {
+  processing("processing", Colors.orange),
+  delivered("delivered", Colors.green),
+  canceled("canceled", Colors.red);
+
+  const OrderStatus(this.name, this.color);
   final String name;
+  final Color color;
 }

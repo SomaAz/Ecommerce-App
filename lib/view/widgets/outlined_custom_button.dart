@@ -6,21 +6,23 @@ class OutlinedCustomButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
+    this.padding,
   }) : super(key: key);
 
   final String text;
   final void Function() onPressed;
-
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: onPressed,
       color: Colors.white,
       textColor: Colors.black,
-      padding: EdgeInsets.symmetric(
-        horizontal: Get.width * .15,
-        vertical: 15,
-      ),
+      padding: padding ??
+          EdgeInsets.symmetric(
+            horizontal: Get.width * .15,
+            vertical: 15,
+          ),
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),

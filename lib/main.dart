@@ -85,6 +85,11 @@ class MyApp extends StatelessWidget {
             fontSize: 13,
             fontWeight: FontWeight.normal,
           ),
+          // bodyLarge: const TextStyle(
+          //   color: Colors.black54,
+          //   fontSize: 15,
+          //   fontWeight: FontWeight.normal,
+          // ),
         ),
       ),
     );

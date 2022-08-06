@@ -63,6 +63,7 @@ class AccountScreen extends StatelessWidget {
                   imageName: "Icon_History",
                   onTap: () {
                     // Get.toNamed(AppRoutes.shippingAddress);
+                    Get.toNamed(AppRoutes.orders);
                   },
                   title: 'Orders History',
                 ),
