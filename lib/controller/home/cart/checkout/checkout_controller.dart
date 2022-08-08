@@ -7,6 +7,7 @@ import 'package:ecommerce_getx/core/enums/order_status.dart';
 import 'package:ecommerce_getx/data/model/card_model.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/data/model/order_model.dart';
+import 'package:ecommerce_getx/data/model/order_tracking_model.dart';
 import 'package:ecommerce_getx/data/model/shipping_address_model.dart';
 import 'package:get/get.dart';
 
@@ -94,16 +95,43 @@ class CheckoutController extends GetxController {
   }
 
   Future<void> _placeOrder() async {
+    final customerLocation =
+        "${_selectedShippingAddress.state}, ${_selectedShippingAddress.country}";
+
+    final List<OrderTrackingModel> starterTrackings = [
+      OrderTrackingModel(
+        title: "Order Signed",
+        location: customerLocation,
+      ),
+      OrderTrackingModel(
+        title: "Order Processed",
+        location: customerLocation,
+      ),
+      OrderTrackingModel(
+        title: "Shipped",
+        location: customerLocation,
+      ),
+      OrderTrackingModel(
+        title: "Delivered",
+        location: customerLocation,
+      ),
+      OrderTrackingModel(
+        title: "Out for delivery",
+        location: customerLocation,
+      ),
+    ];
+
     final orderModel = OrderModel(
       id: "",
+      number: -1,
       timeOrdered: Timestamp.now(),
       status: OrderStatus.processing,
       shippingAddress: _selectedShippingAddress,
       paymentCard: _selectedCard,
-      number: 2500,
       price: totalPrice,
       deliveryType: _selectedDeliveryType,
       products: _orderedProducts,
+      trackings: starterTrackings,
     );
     // await Future.delayed(const Duration(seconds: 2));
     await ordersRepository.placeOrder(orderModel);

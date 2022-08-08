@@ -87,22 +87,22 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                         ),
                       ),
                       const GapH(30),
-                      SizedBox(
-                        child: Flex(
-                          direction: Axis.horizontal,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Flexible(
-                              child: SizeSelectChip(),
-                            ),
-                            GapW(20),
-                            Flexible(
-                              child: ColorSelectChip(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const GapH(20),
+                      // SizedBox(
+                      //   child: Flex(
+                      //     direction: Axis.horizontal,
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: const [
+                      //       Flexible(
+                      //         child: SizeSelectChip(),
+                      //       ),
+                      //       GapW(20),
+                      //       Flexible(
+                      //         child: ColorSelectChip(),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const GapH(20),
                       SizedBox(
                         width: double.infinity,
                         child: Text(
@@ -153,12 +153,21 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 ),
               ],
             ),
-            CustomButton(
-              text: "Add",
-              onPressed: () async {
-                await controller.addProductToCart();
+            GetBuilder<ProductDetailsController>(
+              builder: (controller) {
+                return controller.isAddedToCart
+                    ? CustomButton(
+                        text: "Product Is Added",
+                        onPressed: () {},
+                      )
+                    : CustomButton(
+                        text: "Add",
+                        onPressed: () async {
+                          await controller.addProductToCart();
+                        },
+                      );
               },
-            )
+            ),
           ],
         ),
       ),

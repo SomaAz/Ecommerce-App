@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
@@ -42,7 +44,7 @@ class CartsRepository extends ProductsRepositoryBase {
 
     final snapshot = await ref.get();
     if (snapshot.exists) {
-      Get.snackbar("Alert", "Product Is Already Added To Cart");
+      log("Product Is Already Added To Cart");
     } else {
       await ref.set(mapModel);
       Get.snackbar("Success", "Product Has Been Added To Cart");

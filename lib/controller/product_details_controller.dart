@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
 import 'package:ecommerce_getx/controller/home/favorites_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
@@ -38,6 +40,13 @@ class ProductDetailsController extends GetxController {
         .contains(FirebaseAuthRepository.firebaseAuth.currentUser!.uid);
   }
 
+  bool get isAddedToCart {
+    return Get.find<CartController>()
+        .cartProducts
+        .map((cartProduct) => cartProduct.id)
+        .contains(product.id);
+  }
+
   Future<void> toggleFavorite() async {
     await favoritesRepository.toggleFavorite(product).then((value) {
       Get.find<FavoritesController>().refreshData();
@@ -46,9 +55,16 @@ class ProductDetailsController extends GetxController {
   }
 
   Future<void> addProductToCart() async {
-    await cartsRepository.addProductToCart(product.toCartProductModel());
-
-    //? Refresh Data In The Cart Screen
-    await Get.find<CartController>().refreshData();
+    if (!isAddedToCart) {
+      try {
+        await cartsRepository.addProductToCart(product.toCartProductModel());
+        //? Refresh Data In The Cart Screen
+        await Get.find<CartController>().refreshData();
+        Get.snackbar("Success", "Product Has Been Added To Cart");
+      } catch (e) {
+        log(e.toString());
+      }
+      update();
+    }
   }
 }

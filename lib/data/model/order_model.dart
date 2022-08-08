@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/core/enums/delivery_type.dart';
 import 'package:ecommerce_getx/core/enums/order_status.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
+import 'package:ecommerce_getx/data/model/order_tracking_model.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:ecommerce_getx/data/model/card_model.dart';
@@ -19,6 +20,7 @@ class OrderModel {
   final double price;
   final DeliveryType deliveryType;
   final List<CartProductModel> products;
+  final List<OrderTrackingModel> trackings;
 
   OrderModel({
     required this.id,
@@ -30,6 +32,7 @@ class OrderModel {
     required this.price,
     required this.deliveryType,
     required this.products,
+    required this.trackings,
   });
 
   OrderModel copyWith({
@@ -42,6 +45,7 @@ class OrderModel {
     double? price,
     DeliveryType? deliveryType,
     List<CartProductModel>? products,
+    List<OrderTrackingModel>? trackings,
   }) {
     return OrderModel(
       id: id ?? this.id,
@@ -53,6 +57,7 @@ class OrderModel {
       price: price ?? this.price,
       deliveryType: deliveryType ?? this.deliveryType,
       products: products ?? this.products,
+      trackings: trackings ?? this.trackings,
     );
   }
 
@@ -67,6 +72,7 @@ class OrderModel {
       'price': price,
       'deliveryType': deliveryType.name,
       'products': products.map((product) => product.toMap()).toList(),
+      'trackings': trackings.map((trackings) => trackings.toMap()).toList(),
     };
   }
 
@@ -85,6 +91,9 @@ class OrderModel {
       products: List<CartProductModel>.from(
         map['products']?.map((x) => CartProductModel.fromMap(x)),
       ),
+      trackings: List<OrderTrackingModel>.from(
+        map['trackings']?.map((x) => OrderTrackingModel.fromMap(x)),
+      ),
     );
   }
 
@@ -95,7 +104,7 @@ class OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, status: $status, shippingAddress: $shippingAddress, paymentCard: $paymentCard, timeOrdered: $timeOrdered, number: $number, price: $price, deliveryType: $deliveryType, products: $products)'
+    return 'OrderModel(id: $id, status: $status, shippingAddress: $shippingAddress, paymentCard: $paymentCard, timeOrdered: $timeOrdered, number: $number, price: $price, deliveryType: $deliveryType, products: $products, trackings: $trackings)'
         .replaceAll(",", ", ");
   }
 

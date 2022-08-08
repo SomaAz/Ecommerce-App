@@ -55,10 +55,12 @@ class CustomSliverLayout extends StatelessWidget {
   const CustomSliverLayout({
     required this.children,
     required this.title,
+    this.actions,
     Key? key,
   }) : super(key: key);
   final List<Widget> children;
   final String title;
+  final List<Widget>? actions;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -71,6 +73,7 @@ class CustomSliverLayout extends StatelessWidget {
               const Spacer(),
               AppBar(
                 title: Text(title),
+                actions: actions,
               ),
             ],
           ),

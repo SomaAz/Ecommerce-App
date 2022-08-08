@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/controller/home/account/track_order_controller.dart';
 import 'package:ecommerce_getx/data/model/order_tracking_model.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
@@ -22,55 +19,43 @@ class TrackOrderScreen extends StatelessWidget {
     final heightOfTracker = (heightOfLine + _circleSize) * itemsCount;
 
     return Scaffold(
-      body: GetBuilder<TrackOrderController>(builder: (controller) {
-        final List<OrderTrackingModel> trackings = [
-          OrderTrackingModel(
-            title: "Order Signed",
-            location: "Gaza, Palestine",
-            timeChecked: Timestamp.now(),
-          ),
-          OrderTrackingModel(
-            title: "Order Processed",
-            location: "Gaza, Palestine",
-            timeChecked: Timestamp.now(),
-          ),
-          OrderTrackingModel(
-            title: "Shipped",
-            location: "Gaza, Palestine",
-            // timeChecked: Timestamp.now(),
-          ),
-          OrderTrackingModel(
-            title: "Delivered",
-            location: "Gaza, Palestine",
-          ),
-          OrderTrackingModel(
-            title: "Out for delivery",
-            location: "Gaza, Palestine",
-          ),
-        ];
-
-        return CustomSliverLayout(
-          title: "Order No.${controller.order.number}",
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              child: CustomStatusChangeIndicator(
-                trackings: trackings,
-                titles: const [
-                  "Order Signed",
-                  "Order Processed",
-                  "Shipped",
-                  "Delivered",
-                  "Out for delivery"
-                ],
-                currentStep: 0,
-                heightOfLine: heightOfLine,
-                heightOfTracker: heightOfTracker,
+      body: GetBuilder<TrackOrderController>(
+        builder: (controller) {
+          return CustomSliverLayout(
+            actions: [
+              CircleAvatar(
+                radius: 25,
+                backgroundColor: Get.theme.primaryColor,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.refresh_rounded,
+                    color: Colors.white,
+                  ),
+                  onPressed: controller.isRefreshing
+                      ? null
+                      : () async {
+                          await controller.refreshData();
+                        },
+                ),
               ),
-            ),
-          ],
-        );
-      }),
+              const GapW(15),
+            ],
+            title: "Order No.${controller.order.number}",
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                child: CustomStatusChangeIndicator(
+                  trackings: controller.order.trackings,
+                  currentStep: 0,
+                  heightOfLine: heightOfLine,
+                  heightOfTracker: heightOfTracker,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -78,7 +63,6 @@ class TrackOrderScreen extends StatelessWidget {
 class CustomStatusChangeIndicator extends StatelessWidget {
   const CustomStatusChangeIndicator({
     this.currentStep = 0,
-    required this.titles,
     required this.trackings,
     required this.heightOfTracker,
     required this.heightOfLine,
@@ -88,7 +72,6 @@ class CustomStatusChangeIndicator extends StatelessWidget {
   final int currentStep;
   final double heightOfTracker;
   final double heightOfLine;
-  final List<String> titles;
   final List<OrderTrackingModel> trackings;
 
   @override
@@ -147,7 +130,6 @@ class CustomStatusChangeIndicator extends StatelessWidget {
                     isLineActive: isLineActive,
                     activeColor: Get.theme.primaryColor,
                     inActiveColor: Colors.grey.shade400,
-                    title: titles[index],
                     heightOfLine: heightOfLine,
                   ),
                   const GapW(25),
@@ -202,7 +184,6 @@ class CustomStatusChangeNode extends StatelessWidget {
     this.isLineActive = false,
     this.activeColor = Colors.green,
     this.inActiveColor = Colors.grey,
-    required this.title,
     required this.heightOfLine,
     Key? key,
   }) : super(key: key);
@@ -212,7 +193,6 @@ class CustomStatusChangeNode extends StatelessWidget {
   final bool isLineActive;
   final Color activeColor;
   final Color inActiveColor;
-  final String title;
   final double heightOfLine;
   @override
   Widget build(BuildContext context) {
