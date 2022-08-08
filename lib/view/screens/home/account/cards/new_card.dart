@@ -6,6 +6,7 @@ import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -30,21 +31,17 @@ class NewCardScreen extends StatelessWidget {
                   children: [
                     CustomTextFormField(
                       labelText: "Card Number",
-                      hintText: "0000 0000 0000 0000",
+                      // hintText: "0000 0000 0000 0000",
+                      hintText: "XXXX XXXX XXXX XXXX",
                       controller: controller.numberController,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
-                      maxLength: 19 + 4,
-                      onChange: (val) {
-                        controller.numberController.text =
-                            AppFunctions.splitCardNumber(val);
-                        controller.numberController.selection =
-                            TextSelection.fromPosition(
-                          TextPosition(
-                            offset: controller.numberController.text.length,
-                          ),
-                        );
-                      },
+                      maxLength: 16 + 3,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        CardNumberFormatter(),
+                      ],
+
                       validator: (val) {
                         if (val != null && val.trim().isNotEmpty) {
                           val = val.trim();
@@ -154,6 +151,37 @@ class NewCardScreen extends StatelessWidget {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CardNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    var inputText = newValue.text;
+
+    if (newValue.selection.baseOffset == 0) {
+      return newValue;
+    }
+
+    var bufferString = StringBuffer();
+    for (int i = 0; i < inputText.length; i++) {
+      bufferString.write(inputText[i]);
+      var nonZeroIndexValue = i + 1;
+      if (nonZeroIndexValue % 4 == 0 && nonZeroIndexValue != inputText.length) {
+        bufferString.write(' ');
+      }
+    }
+
+    var string = bufferString.toString();
+    return newValue.copyWith(
+      text: string,
+      selection: TextSelection.collapsed(
+        offset: string.length,
       ),
     );
   }

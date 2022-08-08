@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ecommerce_getx/controller/home/account/order_details_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/core/enums/delivery_type.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/screens/home/account/shipping/shipping_address.dart';
@@ -9,6 +10,7 @@ import 'package:ecommerce_getx/view/widgets/cart_product_card.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/custom_credit_card.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
+import 'package:ecommerce_getx/view/widgets/order_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -62,7 +64,7 @@ class OrderDetailsScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     separatorBuilder: (_, __) => const GapH(15),
                     itemBuilder: ((context, index) {
-                      return CartProductCard(order.products[index]);
+                      return OrderProductCard(order.products[index]);
                     }),
                     itemCount: order.products.length,
                   ),
@@ -134,17 +136,20 @@ class OrderDetailsScreen extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar:
-          GetBuilder<OrderDetailsController>(builder: (contoller) {
-        return Container(
-          height: Get.statusBarHeight,
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: CustomButton(
-            text: "Track Order",
-            onPressed: () {},
-          ),
-        );
-      }),
+      bottomNavigationBar: GetBuilder<OrderDetailsController>(
+        builder: (controller) {
+          return Container(
+            height: Get.statusBarHeight,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: CustomButton(
+              text: "Track Order",
+              onPressed: () {
+                Get.toNamed(AppRoutes.trackOrder, arguments: controller.order);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

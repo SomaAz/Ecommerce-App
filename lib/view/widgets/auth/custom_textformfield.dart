@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String labelText;
@@ -13,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLength;
   final int? maxLines;
   final EdgeInsetsGeometry? padding;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextFormField({
     Key? key,
@@ -29,6 +31,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.padding,
     this.onChange,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -41,6 +44,7 @@ class CustomTextFormField extends StatelessWidget {
       maxLength: maxLength,
       maxLines: maxLines,
       onChanged: onChange,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         contentPadding:
             padding ?? const EdgeInsets.symmetric(vertical: 20, horizontal: 30),

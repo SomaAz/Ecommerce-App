@@ -1,10 +1,12 @@
 import 'package:ecommerce_getx/controller/home/account/cards_controller.dart';
+import 'package:ecommerce_getx/controller/home/account/edit_profile_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/new_card_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/new_shipping_address_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/order_details_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/orders_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/shipping_address_controller.dart';
 import 'package:ecommerce_getx/controller/category_details_controller.dart';
+import 'package:ecommerce_getx/controller/home/account/track_order_controller.dart';
 import 'package:ecommerce_getx/controller/home/cart/checkout/checkout_controller.dart';
 import 'package:ecommerce_getx/controller/home/explore/search_controller.dart';
 import 'package:ecommerce_getx/controller/product_details_controller.dart';
@@ -13,8 +15,10 @@ import 'package:ecommerce_getx/controller/auth/login_controller.dart';
 import 'package:ecommerce_getx/controller/auth/register_controller.dart';
 import 'package:ecommerce_getx/view/screens/home/account/cards/cards.dart';
 import 'package:ecommerce_getx/view/screens/home/account/cards/new_card.dart';
+import 'package:ecommerce_getx/view/screens/home/account/edit_profile/edit_profile.dart';
 import 'package:ecommerce_getx/view/screens/home/account/orders/order_details.dart';
 import 'package:ecommerce_getx/view/screens/home/account/orders/orders.dart';
+import 'package:ecommerce_getx/view/screens/home/account/orders/track_order.dart';
 import 'package:ecommerce_getx/view/screens/home/account/shipping/new_shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/home/account/shipping/shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
@@ -54,6 +58,8 @@ class AppRoutes {
   static const cards = '/cards';
   static const newCard = '/new-card';
   static const orders = '/orders';
+  static const trackOrder = '/track-order';
+  static const editProfile = '/edit-profile';
 
   const AppRoutes._();
 
@@ -133,6 +139,16 @@ class AppRoutes {
       name: orderDetails,
       page: () => const OrderDetailsScreen(),
       binding: BindingsBuilder.put(() => OrderDetailsController()),
+    ),
+    GetPage(
+      name: editProfile,
+      page: () => const EditProfileScreen(),
+      binding: BindingsBuilder.put(() => EditProfileController()),
+    ),
+    GetPage(
+      name: trackOrder,
+      page: () => const TrackOrderScreen(),
+      binding: BindingsBuilder.put(() => TrackOrderController()),
     ),
     // GetPage(
     //   name: cart,

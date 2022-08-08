@@ -20,7 +20,7 @@ class UsersRepository extends UsersRepositoryBase {
     final userDoc = _usersCollection.doc(userModel.id);
 
     try {
-      await userDoc.set(userModel.toMap());
+      await userDoc.set({...userModel.toMap(), "currentOrderNumber": 0});
     } catch (e) {
       userDoc.delete();
 

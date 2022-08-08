@@ -49,7 +49,9 @@ class AccountScreen extends StatelessWidget {
                 const GapH(70),
                 _AccountListTile(
                   imageName: "Icon_Edit-Profile",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.editProfile);
+                  },
                   title: 'Edit Profile',
                 ),
                 _AccountListTile(
