@@ -12,17 +12,28 @@ import 'package:get/get.dart';
 
 //? Repositories
 final FirebaseAuthRepository authRepository = FirebaseAuthRepository.instance;
+
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
 final UsersRepository usersRepository = UsersRepository.instance;
+
 final ProductsRepository productsRepository = ProductsRepository.instance;
+
 final CategoriesRepository categoriesRepository = CategoriesRepository.instance;
+
 final CartsRepository cartsRepository = CartsRepository.instance;
+
 final ShippingAddressRepository shippingAdressRepository =
     ShippingAddressRepository.instance;
-final FavoritesRepository favoritesRepository = FavoritesRepository.instance;
-final CardsRepository cardsRepository = CardsRepository.instance;
-final OrdersRepository ordersRepository = OrdersRepository.instance;
 
+final FavoritesRepository favoritesRepository = FavoritesRepository.instance;
+
+final CardsRepository cardsRepository = CardsRepository.instance;
+
+final OrdersRepository ordersRepository = OrdersRepository.instance;
+//?
+//?
+//?
 double get productCardHeight => (Get.height * .3);
 
 final remainingScreenHeight =

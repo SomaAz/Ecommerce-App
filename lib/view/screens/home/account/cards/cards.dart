@@ -51,17 +51,29 @@ class CardsScreen extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 separatorBuilder: (_, __) => const GapH(20),
                 itemBuilder: (context, index) {
-                  return CustomCreditCardRadio(
-                    card: CardModel(
-                      id: controller.cards[index].id,
-                      number: controller.cards[index].number,
-                      expiryDate: controller.cards[index].expiryDate,
-                      holder: controller.cards[index].holder,
-                      cvv: controller.cards[index].cvv,
-                    ),
-                    selectedCard: controller.selectedCard,
-                    onChanged: controller.setSelectedCard,
-                  );
+                  return Get.arguments?['fromCheckout'] != null
+                      ? CustomCreditCard.radio(
+                          controller.cards[index],
+                          selectedCard: controller.selectedCard,
+                          onChanged: controller.setSelectedCard,
+                          onDelete: controller.deleteCard,
+                          onEdit: (card) {
+                            Get.toNamed(
+                              AppRoutes.editCard,
+                              arguments: {"card": card},
+                            );
+                          },
+                        )
+                      : CustomCreditCard(
+                          controller.cards[index],
+                          onDelete: controller.deleteCard,
+                          onEdit: (card) {
+                            Get.toNamed(
+                              AppRoutes.editCard,
+                              arguments: {"card": card},
+                            );
+                          },
+                        );
                 },
                 itemCount: controller.cards.length,
               );
@@ -69,35 +81,37 @@ class CardsScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: GetBuilder<CardsController>(builder: (controller) {
-        if (controller.cards.isEmpty) return const Gap();
-        return SizedBox(
-          height: Get.statusBarHeight,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Get.previousRoute == AppRoutes.checkout
-                ? Center(
-                    child: CustomButton(
-                      text: "Select",
-                      onPressed: () {
-                        Get.back(result: controller.selectedCard);
-                      },
-                    ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CustomButton(
-                        text: "New",
+      bottomNavigationBar: GetBuilder<CardsController>(
+        builder: (controller) {
+          if (controller.cards.isEmpty) return const Gap();
+          return SizedBox(
+            height: Get.statusBarHeight,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Get.arguments?['fromCheckout'] != null
+                  ? Center(
+                      child: CustomButton(
+                        text: "Select",
                         onPressed: () {
-                          Get.toNamed(AppRoutes.newCard);
+                          Get.back(result: controller.selectedCard);
                         },
                       ),
-                    ],
-                  ),
-          ),
-        );
-      }),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomButton(
+                          text: "New",
+                          onPressed: () {
+                            Get.toNamed(AppRoutes.newCard);
+                          },
+                        ),
+                      ],
+                    ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

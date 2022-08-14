@@ -3,7 +3,8 @@ import 'package:ecommerce_getx/data/model/user_model.dart';
 import 'package:get/get.dart';
 
 class AccountController extends GetxController {
-  UserModel? userModel;
+  late UserModel _userModel;
+  UserModel get userModel => _userModel;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -14,7 +15,7 @@ class AccountController extends GetxController {
   }
 
   Future<void> getCurrentUserModel() async {
-    userModel = await usersRepository.getCurrentUserModel();
+    _userModel = await usersRepository.getCurrentUserModel();
   }
 
   Future<void> loadData() async {
@@ -29,8 +30,8 @@ class AccountController extends GetxController {
   }
 
   @override
-  void onReady() async {
+  void onInit() async {
     await loadData();
-    super.onReady();
+    super.onInit();
   }
 }

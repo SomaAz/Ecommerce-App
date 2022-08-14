@@ -1,14 +1,13 @@
 import 'package:ecommerce_getx/controller/home/cart/checkout/checkout_controller.dart';
-import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/core/enums/delivery_type.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
-import 'package:ecommerce_getx/view/screens/home/account/shipping/shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/home/cart/checkout/delivery.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/custom_credit_card.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:ecommerce_getx/view/widgets/section_title.dart';
+import 'package:ecommerce_getx/view/widgets/shipping_address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,13 +39,16 @@ class CheckoutScreen extends StatelessWidget {
                     withPadding: false,
                   ),
                   // const GapH(10),
-                  Row(
-                    children: [
-                      ShippingAddressCard(
-                        controller.selectedShippingAddress,
-                      ),
-                    ],
-                  ),
+                  controller.selectedShippingAddress == null
+                      ? Text(
+                          "You Don't Have Any Shipping Address, Add One",
+                          style: Get.textTheme.headline6,
+                        )
+                      : ShippingAddressCard(
+                          controller.selectedShippingAddress!,
+                          withActions: false,
+                        ),
+
                   const GapH(30),
                   SectionTitle.withWidget(
                     "Payment",
@@ -57,7 +59,12 @@ class CheckoutScreen extends StatelessWidget {
                     withPadding: false,
                   ),
                   const GapH(10),
-                  CustomCreditCard(controller.selectedCard),
+                  controller.selectedCard == null
+                      ? Text(
+                          "You Don't Have Any Shipping Address, Add One",
+                          style: Get.textTheme.headline6,
+                        )
+                      : CustomCreditCard(controller.selectedCard!),
                   const GapH(35),
                   const SectionTitle(
                     "Delivery",

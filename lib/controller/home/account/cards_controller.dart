@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:ecommerce_getx/core/constant/constants.dart';
-import 'package:ecommerce_getx/core/constant/get_pages.dart';
+import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/data/model/card_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CardsController extends GetxController {
@@ -16,8 +15,8 @@ class CardsController extends GetxController {
     update();
   }
 
-  late CardModel _selectedCard;
-  CardModel get selectedCard => _selectedCard;
+  late CardModel? _selectedCard;
+  CardModel? get selectedCard => _selectedCard;
 
   void setSelectedCard(CardModel value) {
     _selectedCard = value;
@@ -27,6 +26,33 @@ class CardsController extends GetxController {
   Future<void> getCurrentUsercards() async {
     cards = await cardsRepository.getCurrentUserCards();
     if (cards.isNotEmpty) _selectedCard = cards[0];
+  }
+
+  Future<void> deleteCard(CardModel card) async {
+    await AppFunctions.showChoiceDialog(
+      text: "Are Sure You Wan't To Delete This Payment Card?",
+      onConfirm: () async {
+        await _deleteCard(card).then((value) => Get.back());
+      },
+    );
+  }
+
+  Future<void> _deleteCard(CardModel card) async {
+    await cardsRepository.deleteCard(card).then((value) {
+      //?check if the selected card equals the deleted card
+      if (_selectedCard == card) {
+        final cardIndex = cards.indexOf(card);
+        //?if there is any other card make it the selected card
+        //?if there is no other card make the selected card null
+        if (cards.length > cardIndex + 1) {
+          _selectedCard = cards[cardIndex + 1];
+        } else {
+          _selectedCard = null;
+        }
+      }
+      cards.remove(card);
+      update();
+    });
   }
 
   Future<void> loadData() async {
@@ -41,19 +67,15 @@ class CardsController extends GetxController {
   }
 
   @override
-  void onReady() async {
+  void onInit() async {
     await loadData();
-    if (Get.previousRoute == AppRoutes.checkout) {
-      log(selectedCard.number);
-
+    if (Get.arguments?['fromCheckout'] != null &&
+        Get.arguments?['id'] != null) {
       _selectedCard = cards.firstWhere(
-        (card) => card.id == Get.arguments['id'],
+        (card) => card.id == Get.arguments?['id'],
       );
-
-      // update();
-      log(selectedCard.number);
     }
 
-    super.onReady();
+    super.onInit();
   }
 }

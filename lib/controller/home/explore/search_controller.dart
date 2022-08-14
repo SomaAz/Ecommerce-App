@@ -55,8 +55,8 @@ class SearchController extends GetxController {
   }
 
   @override
-  void onReady() async {
+  void onInit() async {
     await loadData();
-    super.onReady();
+    super.onInit();
   }
 }

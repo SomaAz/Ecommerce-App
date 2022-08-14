@@ -144,4 +144,46 @@ class AppFunctions {
 
     return newStr;
   }
+
+  static void showPopupMenu({
+    required BuildContext context,
+    required GlobalKey widgetKey,
+    required Function(dynamic value) onSelected,
+  }) async {
+    final RenderBox renderBox =
+        widgetKey.currentContext?.findRenderObject() as RenderBox;
+    final Offset offset = renderBox.localToGlobal(Offset.zero);
+    // print('Offset: ${offset.dx}, ${offset.dy}');
+
+    await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(offset.dx, offset.dy, 0, 0),
+      items: const [
+        PopupMenuItem(
+          value: "Delete",
+          child: Text("Delete"),
+        ),
+        PopupMenuItem(
+          value: "Edit",
+          child: Text("Edit"),
+        ),
+      ],
+    ).then(onSelected);
+  }
+
+  static Future<void> showChoiceDialog({
+    required String text,
+    String title = "Alert",
+    required void Function() onConfirm,
+    void Function()? onCancel,
+  }) async {
+    await Get.defaultDialog(
+      title: title,
+      middleText: text,
+      onConfirm: onConfirm,
+      onCancel: onCancel,
+      confirmTextColor: Colors.black,
+      textCancel: "cancel",
+    );
+  }
 }

@@ -7,6 +7,8 @@ abstract class CardsRepositoryBase {
   Future<List<CardModel>> getCurrentUserCards();
   Future<void> addCard(CardModel cardModel);
   Future<CardModel?> getCurrentUserFirstCard();
+  Future<void> deleteCard(CardModel deletedCard);
+  Future<void> editCard(CardModel editedCard);
 }
 
 class CardsRepository extends CardsRepositoryBase {
@@ -57,5 +59,17 @@ class CardsRepository extends CardsRepositoryBase {
       return address;
     }
     return null;
+  }
+
+  @override
+  Future<void> deleteCard(CardModel deletedCard) async {
+    final docRef = _cardsCollectionReference.doc(deletedCard.id);
+    await docRef.delete();
+  }
+
+  @override
+  Future<void> editCard(CardModel editedCard) async {
+    final docRef = _cardsCollectionReference.doc(editedCard.id.trim());
+    await docRef.update(editedCard.toMap());
   }
 }

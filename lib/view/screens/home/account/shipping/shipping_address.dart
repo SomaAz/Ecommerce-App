@@ -1,12 +1,11 @@
 import 'package:ecommerce_getx/controller/home/account/shipping_address_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
-import 'package:ecommerce_getx/data/model/shipping_address_model.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
-import 'package:ecommerce_getx/view/widgets/custom_radio.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
+import 'package:ecommerce_getx/view/widgets/shipping_address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,11 +53,29 @@ class ShippingAddressScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (_, __) => const GapH(40),
                   itemBuilder: (context, index) {
-                    return ShippingAddressCardRadio(
-                      controller.addresses[index],
-                      onChanged: controller.setSelectedAddress,
-                      selectedAddress: controller.selectedAddress,
-                    );
+                    return Get.arguments?['fromCheckout'] != null
+                        ? ShippingAddressCard.radio(
+                            controller.addresses[index],
+                            onChanged: controller.setSelectedAddress,
+                            selectedAddress: controller.selectedAddress,
+                            onDelete: controller.deleteShippingAddress,
+                            onEdit: (address) {
+                              Get.toNamed(
+                                AppRoutes.editShippingAddress,
+                                arguments: address,
+                              );
+                            },
+                          )
+                        : ShippingAddressCard(
+                            controller.addresses[index],
+                            onDelete: controller.deleteShippingAddress,
+                            onEdit: (address) {
+                              Get.toNamed(
+                                AppRoutes.editShippingAddress,
+                                arguments: address,
+                              );
+                            },
+                          );
                   },
                   itemCount: controller.addresses.length,
                 );
@@ -76,84 +93,30 @@ class ShippingAddressScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
             ),
-            child: Get.previousRoute == AppRoutes.checkout
-                ? Center(
-                    child: CustomButton(
-                      text: "Select",
-                      onPressed: () {
-                        Get.back(result: controller.selectedAddress);
-                      },
-                    ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CustomButton(
-                        text: "New",
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.newShippingAddress);
-                        },
-                      ),
-                    ],
-                  ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Get.arguments?['fromCheckout'] != null
+                    ? Center(
+                        child: CustomButton(
+                          text: "Select",
+                          onPressed: () {
+                            Get.back(result: controller.selectedAddress);
+                          },
+                        ),
+                      )
+                    : const Gap(),
+                CustomButton(
+                  text: "New",
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.newShippingAddress);
+                  },
+                ),
+              ],
+            ),
           ),
         );
       }),
-    );
-  }
-}
-
-class ShippingAddressCardRadio extends StatelessWidget {
-  const ShippingAddressCardRadio(
-    this.address, {
-    required this.onChanged,
-    required this.selectedAddress,
-    Key? key,
-  }) : super(key: key);
-
-  final ShippingAddressModel address;
-  final ShippingAddressModel selectedAddress;
-  final void Function(ShippingAddressModel) onChanged;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ShippingAddressCard(address),
-        const GapW(30),
-        CustomRadio<ShippingAddressModel>(
-          value: address,
-          groupValue: selectedAddress,
-          onChanged: onChanged,
-          // activeColor: Get.theme.primaryColor,
-        )
-      ],
-    );
-  }
-}
-
-class ShippingAddressCard extends StatelessWidget {
-  const ShippingAddressCard(
-    this.address, {
-    Key? key,
-  }) : super(key: key);
-
-  final ShippingAddressModel address;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          address.name,
-          style: Get.textTheme.headline4,
-        ),
-        const GapH(6),
-        Text(
-          "${address.street}, ${address.city}, ${address.state}, ${address.country}",
-          style: Get.textTheme.bodyText1!
-              .copyWith(color: Colors.black, height: 1.6),
-        ),
-      ],
     );
   }
 }

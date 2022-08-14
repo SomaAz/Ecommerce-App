@@ -7,6 +7,8 @@ abstract class ShippingAddressRepositoryBase {
   Future<List<ShippingAddressModel>> getCurrentUserShippingAddresses();
   Future<void> addShippingAddress(ShippingAddressModel addressModel);
   Future<ShippingAddressModel?> getCurrentUserFirstShippingAddress();
+  Future<void> deleteShippingAddress(ShippingAddressModel deletedAddressModel);
+  Future<void> editShippingAddress(ShippingAddressModel editedAddressModel);
 }
 
 class ShippingAddressRepository extends ShippingAddressRepositoryBase {
@@ -51,13 +53,31 @@ class ShippingAddressRepository extends ShippingAddressRepositoryBase {
         .orderBy('timeCreated')
         .limit(1)
         .get();
+    if (snapshot.docs.isNotEmpty) {
+      final doc = snapshot.docs.first;
+      if (doc.exists) {
+        final address = ShippingAddressModel.fromMap(doc.data());
 
-    final doc = snapshot.docs.first;
-    if (doc.exists) {
-      final address = ShippingAddressModel.fromMap(doc.data());
-
-      return address;
+        return address;
+      }
     }
     return null;
+  }
+
+  @override
+  Future<void> deleteShippingAddress(
+      ShippingAddressModel deletedAddressModel) async {
+    final docRef = _shippingAdressessCollectionRef.doc(deletedAddressModel.id);
+
+    await docRef.delete();
+  }
+
+  @override
+  Future<void> editShippingAddress(
+      ShippingAddressModel editedAddressModel) async {
+    final docRef =
+        _shippingAdressessCollectionRef.doc(editedAddressModel.id.trim());
+
+    await docRef.update(editedAddressModel.toMap());
   }
 }

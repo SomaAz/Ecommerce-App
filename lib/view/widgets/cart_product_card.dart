@@ -4,12 +4,20 @@ import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CartProductCard extends GetView<CartController> {
+class CartProductCard extends StatelessWidget {
   const CartProductCard(
     this.cartProduct, {
+    required this.onDelete,
+    required this.onIncrement,
+    required this.onDecrement,
     Key? key,
   }) : super(key: key);
+
   final CartProductModel cartProduct;
+  final void Function() onDelete;
+  final void Function() onIncrement;
+  final void Function() onDecrement;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -63,10 +71,7 @@ class CartProductCard extends GetView<CartController> {
                           child: Row(
                             children: [
                               IconButton(
-                                onPressed: () async {
-                                  await controller
-                                      .incrementQuantity(cartProduct);
-                                },
+                                onPressed: onIncrement,
                                 icon: const Icon(
                                   Icons.add_rounded,
                                 ),
@@ -80,10 +85,7 @@ class CartProductCard extends GetView<CartController> {
                                 },
                               ),
                               IconButton(
-                                onPressed: () async {
-                                  await controller
-                                      .decrementQuantity(cartProduct);
-                                },
+                                onPressed: onDecrement,
                                 icon: const Icon(
                                   Icons.remove_rounded,
                                 ),
@@ -93,19 +95,7 @@ class CartProductCard extends GetView<CartController> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {
-                          Get.defaultDialog(
-                            title: "Alert",
-                            middleText:
-                                "Are Sure You Wan't To Delete This Product From Cart?",
-                            onConfirm: () async {
-                              await controller.deleteCartProduct(cartProduct);
-                              Get.back();
-                            },
-                            confirmTextColor: Colors.black,
-                            textCancel: "cancel",
-                          );
-                        },
+                        onPressed: onDelete,
                         icon: const Icon(Icons.delete_outline_rounded),
                         // color: Colors.red,
                       ),

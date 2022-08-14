@@ -31,18 +31,18 @@ class CheckoutController extends GetxController {
 
   //? Address
 
-  late ShippingAddressModel _selectedShippingAddress;
-  ShippingAddressModel get selectedShippingAddress => _selectedShippingAddress;
+  late ShippingAddressModel? _selectedShippingAddress;
+  ShippingAddressModel? get selectedShippingAddress => _selectedShippingAddress;
 
   Future<void> setSelectedShippingAddress() async {
     _selectedShippingAddress =
-        (await shippingAdressRepository.getCurrentUserFirstShippingAddress())!;
+        (await shippingAdressRepository.getCurrentUserFirstShippingAddress());
   }
 
   Future<void> changeSelectedUserAddress() async {
     final newAddress = await Get.toNamed(
       AppRoutes.shippingAddress,
-      arguments: {"id": _selectedShippingAddress.id},
+      arguments: {"fromCheckout": true, "id": _selectedShippingAddress?.id},
     );
     if (newAddress != null) {
       _selectedShippingAddress = newAddress;
@@ -51,8 +51,8 @@ class CheckoutController extends GetxController {
   }
 
   //? Card
-  late CardModel _selectedCard;
-  CardModel get selectedCard => _selectedCard;
+  late CardModel? _selectedCard;
+  CardModel? get selectedCard => _selectedCard;
 
   Future<void> setSelectedCard() async {
     _selectedCard = (await cardsRepository.getCurrentUserFirstCard())!;
@@ -61,7 +61,7 @@ class CheckoutController extends GetxController {
   Future<void> changeSelectedUserCard() async {
     final newCard = await Get.toNamed(
       AppRoutes.cards,
-      arguments: {"id": _selectedCard.id},
+      arguments: {"fromCheckout": true, "id": _selectedCard?.id},
     );
     if (newCard != null) {
       _selectedCard = newCard;
@@ -89,14 +89,28 @@ class CheckoutController extends GetxController {
   bool _isPlacingOrderLoading = false;
   bool get isPlacingOrderLoading => _isPlacingOrderLoading;
 
-  void setisPlacingOrderLoading(bool value) {
+  void setIsPlacingOrderLoading(bool value) {
     _isPlacingOrderLoading = value;
     update();
   }
 
-  Future<void> _placeOrder() async {
+  Future<bool> _placeOrder() async {
+    if (_selectedShippingAddress == null) {
+      Get.snackbar(
+        "",
+        "You Have To Add A Shipping Address To Continue Ordering",
+      );
+      return false;
+    }
+    if (_selectedCard == null) {
+      Get.snackbar(
+        "",
+        "You Have To Add A Payment Card To Continue Ordering",
+      );
+      return false;
+    }
     final customerLocation =
-        "${_selectedShippingAddress.state}, ${_selectedShippingAddress.country}";
+        "${_selectedShippingAddress!.state}, ${_selectedShippingAddress!.country}";
 
     final List<OrderTrackingModel> starterTrackings = [
       OrderTrackingModel(
@@ -126,27 +140,32 @@ class CheckoutController extends GetxController {
       number: -1,
       timeOrdered: Timestamp.now(),
       status: OrderStatus.processing,
-      shippingAddress: _selectedShippingAddress,
-      paymentCard: _selectedCard,
+      shippingAddress: _selectedShippingAddress!,
+      paymentCard: _selectedCard!,
       price: totalPrice,
       deliveryType: _selectedDeliveryType,
       products: _orderedProducts,
       trackings: starterTrackings,
     );
     // await Future.delayed(const Duration(seconds: 2));
-    await ordersRepository.placeOrder(orderModel);
+    return await ordersRepository
+        .placeOrder(orderModel)
+        .then((value) => true)
+        .catchError((error, stackTrace) => false);
   }
 
   Future<void> placeOrder() async {
-    setisPlacingOrderLoading(true);
+    setIsPlacingOrderLoading(true);
 
-    await _placeOrder().then((value) async {
-      await Get.find<CartController>().clearCartProducts();
-      Get.back();
-      Get.snackbar("Success", "Order Placed Successfully");
+    await _placeOrder().then((orderPlaced) async {
+      if (orderPlaced) {
+        await Get.find<CartController>().clearCartProducts();
+        Get.back();
+        Get.snackbar("Success", "Order Placed Successfully");
+      }
     });
 
-    setisPlacingOrderLoading(false);
+    setIsPlacingOrderLoading(false);
   }
 
   Future<void> loadData() async {

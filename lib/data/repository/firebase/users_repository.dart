@@ -7,6 +7,7 @@ abstract class UsersRepositoryBase {
   Future<void> addUserToFirestore(UserModel userModel);
   Future<UserModel> getUserModel(String uid);
   Future<UserModel> getCurrentUserModel();
+  Future<void> changeUsername(String newUsername);
 }
 
 class UsersRepository extends UsersRepositoryBase {
@@ -39,5 +40,13 @@ class UsersRepository extends UsersRepositoryBase {
   Future<UserModel> getCurrentUserModel() async {
     final uid = FirebaseAuthRepository.firebaseAuth.currentUser!.uid;
     return await getUserModel(uid);
+  }
+
+  @override
+  Future<void> changeUsername(String newUsername) async {
+    final uid = FirebaseAuthRepository.firebaseAuth.currentUser!.uid;
+    final docRef = _usersCollection.doc(uid);
+
+    await docRef.update({"username": newUsername});
   }
 }

@@ -34,12 +34,12 @@ class AccountScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          controller.userModel!.username,
+                          controller.userModel.username,
                           style: Get.textTheme.headline1!
                               .copyWith(fontWeight: FontWeight.normal),
                         ),
                         Text(
-                          controller.userModel!.email,
+                          controller.userModel.email,
                           style: Get.textTheme.headline5,
                         ),
                       ],
@@ -50,7 +50,10 @@ class AccountScreen extends StatelessWidget {
                 _AccountListTile(
                   imageName: "Icon_Edit-Profile",
                   onTap: () {
-                    Get.toNamed(AppRoutes.editProfile);
+                    Get.toNamed(
+                      AppRoutes.editProfile,
+                      arguments: {"userModel": controller.userModel},
+                    );
                   },
                   title: 'Edit Profile',
                 ),

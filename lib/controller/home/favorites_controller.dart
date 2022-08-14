@@ -53,8 +53,8 @@ class FavoritesController extends GetxController {
   }
 
   @override
-  void onReady() async {
+  void onInit() async {
     loadData();
-    super.onReady();
+    super.onInit();
   }
 }

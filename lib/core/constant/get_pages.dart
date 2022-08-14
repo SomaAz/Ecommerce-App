@@ -1,5 +1,8 @@
+import 'package:ecommerce_getx/controller/auth/change_password_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/cards_controller.dart';
+import 'package:ecommerce_getx/controller/home/account/edit_card_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/edit_profile_controller.dart';
+import 'package:ecommerce_getx/controller/home/account/edit_shipping_address_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/new_card_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/new_shipping_address_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/order_details_controller.dart';
@@ -13,12 +16,15 @@ import 'package:ecommerce_getx/controller/product_details_controller.dart';
 import 'package:ecommerce_getx/controller/auth/forgot_password_controller.dart';
 import 'package:ecommerce_getx/controller/auth/login_controller.dart';
 import 'package:ecommerce_getx/controller/auth/register_controller.dart';
+import 'package:ecommerce_getx/view/screens/auth/change_password.dart';
 import 'package:ecommerce_getx/view/screens/home/account/cards/cards.dart';
+import 'package:ecommerce_getx/view/screens/home/account/cards/edit_card.dart';
 import 'package:ecommerce_getx/view/screens/home/account/cards/new_card.dart';
 import 'package:ecommerce_getx/view/screens/home/account/edit_profile/edit_profile.dart';
 import 'package:ecommerce_getx/view/screens/home/account/orders/order_details.dart';
 import 'package:ecommerce_getx/view/screens/home/account/orders/orders.dart';
 import 'package:ecommerce_getx/view/screens/home/account/orders/track_order.dart';
+import 'package:ecommerce_getx/view/screens/home/account/shipping/edit_shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/home/account/shipping/new_shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/home/account/shipping/shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
@@ -48,6 +54,7 @@ class AppRoutes {
   static const register = "/register";
   static const login = "/login";
   static const forgotPassword = "/forgot-password";
+  static const changePassword = "/change-password";
   //?Details Screens
   static const categoryDetails = "/category-details";
   static const productDetails = "/product-details";
@@ -55,8 +62,10 @@ class AppRoutes {
   //?Account
   static const shippingAddress = '/shipping-address';
   static const newShippingAddress = '/new-shipping-address';
+  static const editShippingAddress = '/edit-shipping-address';
   static const cards = '/cards';
   static const newCard = '/new-card';
+  static const editCard = '/edit-card';
   static const orders = '/orders';
   static const trackOrder = '/track-order';
   static const editProfile = '/edit-profile';
@@ -150,10 +159,20 @@ class AppRoutes {
       page: () => const TrackOrderScreen(),
       binding: BindingsBuilder.put(() => TrackOrderController()),
     ),
-    // GetPage(
-    //   name: cart,
-    //   page: () => const CartScreen(),
-    //   binding: BindingsBuilder.put(() => CartController()),
-    // ),
+    GetPage(
+      name: editShippingAddress,
+      page: () => const EditShippingAddressScreen(),
+      binding: BindingsBuilder.put(() => EditShippingAddressController()),
+    ),
+    GetPage(
+      name: editCard,
+      page: () => const EditCardScreen(),
+      binding: BindingsBuilder.put(() => EditCardController()),
+    ),
+    GetPage(
+      name: changePassword,
+      page: () => const ChangePasswordScreen(),
+      binding: BindingsBuilder.put(() => ChangePasswordController()),
+    ),
   ];
 }

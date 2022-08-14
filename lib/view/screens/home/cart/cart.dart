@@ -38,7 +38,17 @@ class CartScreen extends StatelessWidget {
                   return const Gap(height: 10);
                 },
                 itemBuilder: (context, index) {
-                  return CartProductCard(controller.cartProducts[index]);
+                  return CartProductCard(
+                    controller.cartProducts[index],
+                    onIncrement: () => controller
+                        .incrementQuantity(controller.cartProducts[index]),
+                    onDecrement: () => controller
+                        .incrementQuantity(controller.cartProducts[index]),
+                    onDelete: () {
+                      controller
+                          .deleteCartProduct(controller.cartProducts[index]);
+                    },
+                  );
                 },
                 itemCount: controller.cartProducts.length,
               ),

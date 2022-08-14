@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 class CustomRadio<T> extends StatelessWidget {
   final T value;
-  final T groupValue;
-  final void Function(T value) onChanged;
+  final T? groupValue;
+  final void Function(T value)? onChanged;
   final String? text;
   const CustomRadio({
     Key? key,
@@ -17,7 +17,7 @@ class CustomRadio<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconButton = IconButton(
-      onPressed: () => onChanged(value),
+      onPressed: () => onChanged?.call(value),
       icon: Icon(
         value == groupValue ? Icons.check_circle : Icons.circle,
         color:
