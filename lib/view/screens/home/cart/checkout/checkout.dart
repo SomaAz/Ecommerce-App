@@ -1,9 +1,9 @@
 import 'package:ecommerce_getx/controller/home/cart/checkout/checkout_controller.dart';
 import 'package:ecommerce_getx/core/enums/delivery_type.dart';
-import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/screens/home/cart/checkout/delivery.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/custom_credit_card.dart';
+import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:ecommerce_getx/view/widgets/section_title.dart';

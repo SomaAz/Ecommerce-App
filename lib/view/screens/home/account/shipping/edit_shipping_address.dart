@@ -1,5 +1,4 @@
 import 'package:ecommerce_getx/controller/home/account/edit_shipping_address_controller.dart';
-import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/widgets/auth/custom_textformfield.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
@@ -7,6 +6,8 @@ import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+
+import '../../../../widgets/custom_sliver_layout.dart';
 
 class EditShippingAddressScreen extends StatelessWidget {
   const EditShippingAddressScreen({Key? key}) : super(key: key);

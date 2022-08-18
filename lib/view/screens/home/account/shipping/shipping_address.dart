@@ -1,8 +1,8 @@
 import 'package:ecommerce_getx/controller/home/account/shipping_address_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
-import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
+import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:ecommerce_getx/view/widgets/shipping_address_card.dart';

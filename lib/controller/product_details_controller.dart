@@ -11,8 +11,11 @@ import 'package:get/get.dart';
 
 class ProductDetailsController extends GetxController {
   final ProductModel product;
+  final String heroTagAdditon;
 
-  ProductDetailsController() : product = Get.arguments {
+  ProductDetailsController()
+      : product = Get.arguments['product'],
+        heroTagAdditon = Get.arguments['heroTagAddition'] ?? "" {
     if (product.sizes.isNotEmpty) selectedSize = product.sizes[0].obs;
     if (product.colors.isNotEmpty) selectedColor = product.colors[0].obs;
     // isFavorite = product.favorites

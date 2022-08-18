@@ -3,6 +3,7 @@ import 'package:ecommerce_getx/controller/home/account/account_controller.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -81,8 +82,8 @@ class AccountScreen extends StatelessWidget {
                 ),
                 _AccountListTile(
                   imageName: "Icon_Alert",
-                  onTap: () {
-                    // Get.toNamed(AppRoutes.shippingAddress);
+                  onTap: () async {
+                    print(await FirebaseMessaging.instance.getToken());
                   },
                   title: 'Notifications',
                 ),

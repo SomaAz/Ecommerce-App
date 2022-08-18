@@ -43,7 +43,7 @@ class CartScreen extends StatelessWidget {
                     onIncrement: () => controller
                         .incrementQuantity(controller.cartProducts[index]),
                     onDecrement: () => controller
-                        .incrementQuantity(controller.cartProducts[index]),
+                        .decrementQuantity(controller.cartProducts[index]),
                     onDelete: () {
                       controller
                           .deleteCartProduct(controller.cartProducts[index]);
@@ -72,13 +72,13 @@ class CartScreen extends StatelessWidget {
                 children: [
                   Text(
                     "Total",
-                    style: Get.textTheme.headline4!
-                        .copyWith(color: Colors.black54),
+                    style: Get.textTheme.headline4
+                        ?.copyWith(color: Colors.black54),
                   ),
                   Text(
                     "\$${controller.cartProducts.isEmpty ? 0 : controller.totalPrice}",
-                    style: Get.textTheme.headline3!
-                        .copyWith(color: Get.theme.primaryColor),
+                    style: Get.textTheme.headline3
+                        ?.copyWith(color: Get.theme.primaryColor),
                   ),
                 ],
               ),

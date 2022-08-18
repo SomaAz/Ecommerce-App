@@ -1,6 +1,6 @@
 import 'package:ecommerce_getx/controller/auth/change_password_controller.dart';
-import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
+import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';

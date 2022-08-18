@@ -15,29 +15,62 @@ class SearchScreen extends GetView<SearchController> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-          child: Column(
+          child: Flex(
+            direction: Axis.vertical,
             children: [
-              SearchTextField(
-                autofocus: true,
-                icon: IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(Icons.cancel_outlined),
+              Flexible(
+                flex: 0,
+                child: SearchTextField(
+                  autofocus: true,
+                  icon: IconButton(
+                    onPressed: () {
+                      Get.back();
+                      // Get.isRegistered<SearchController>();
+                    },
+                    icon: const Icon(Icons.cancel_outlined),
+                  ),
+                  controller: controller.searchController,
+                  onChanged: controller.onChangeSearchHandler,
+                  hint: "Search",
                 ),
-                onChanged: controller.onChangeSearchHandler,
-                hint: "Search",
               ),
               const GapH(20),
-              GetX<SearchController>(builder: (controller) {
-                if (controller.isLoading.value) {
-                  return const Loading();
-                }
+              Flexible(
+                child: GetBuilder<SearchController>(
+                  builder: (controller) {
+                    if (controller.isSearching) return const Loading();
 
-                return ProductsGrid(controller.searchedProducts.toList());
-              }),
+                    if (controller.searchController.text.trim().isEmpty) {
+                      return Center(
+                        child: Text(
+                          "Type Something to Search",
+                          style: Get.textTheme.headline5,
+                        ),
+                      );
+                    }
+                    if (controller.searchedProducts.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "There Are No Products Match Your Search",
+                          style: Get.textTheme.headline5,
+                        ),
+                      );
+                    }
+
+                    return ProductsGrid(
+                      controller.searchedProducts,
+                      scrollable: true,
+                      productCardHeroTagAddition: "search",
+                      // controller: controller.scrollController,
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 }

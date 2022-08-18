@@ -1,20 +1,39 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_getx/controller/product_details_controller.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
+import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard(
     this.product, {
+    this.heroTagAddition = "",
     Key? key,
   }) : super(key: key);
   final ProductModel product;
+  final String heroTagAddition;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(AppRoutes.productDetails, arguments: product);
+        // Get.put(ProductDetailsController());
+        // Get.to(
+        //   AppRoutes.getPages
+        //       .firstWhere(
+        //         (element) => element.name == AppRoutes.productDetails,
+        //       )
+        //       .page,
+        //   arguments: {"product": product},
+        //   preventDuplicates: true,
+        //   transition: Transition.zoom,
+        // );
+        Get.toNamed(AppRoutes.productDetails, arguments: {
+          "product": product,
+          "heroTagAddition": heroTagAddition,
+        });
       },
       child: SizedBox(
         width: Get.width * .45,
@@ -28,12 +47,15 @@ class ProductCard extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   Hero(
-                    tag: "image:${product.id}",
+                    tag: "image:$heroTagAddition:${product.id}",
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
-                      child: Image.network(
-                        product.image,
+                      child: CachedNetworkImage(
+                        imageUrl: product.image,
+                        // imageUrl: "https://i.ibb.co/zmty86W/Mockup3.png",
                         fit: BoxFit.fill,
+                        placeholder: (_, __) =>
+                            const ColoredBox(color: Colors.grey),
                       ),
                     ),
                   ),
@@ -48,7 +70,7 @@ class ProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Hero(
-                    tag: "name:${product.id}",
+                    tag: "name:$heroTagAddition:${product.id}",
                     child: Text(
                       product.name,
                       style: Get.textTheme.headline4,
@@ -58,7 +80,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   const GapH(2),
                   Hero(
-                    tag: "brand:${product.id}",
+                    tag: "brand:$heroTagAddition:${product.id}",
                     child: Text(
                       product.brand,
                       style: Get.textTheme.bodyText2,

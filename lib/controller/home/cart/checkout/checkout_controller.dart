@@ -114,6 +114,11 @@ class CheckoutController extends GetxController {
 
     final List<OrderTrackingModel> starterTrackings = [
       OrderTrackingModel(
+        title: "Order Placed",
+        location: customerLocation,
+        timeChecked: Timestamp.now(),
+      ),
+      OrderTrackingModel(
         title: "Order Signed",
         location: customerLocation,
       ),

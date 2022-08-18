@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:ecommerce_getx/controller/product_details_controller.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
+import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,10 +18,12 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
           SliverAppBar(
             expandedHeight: Get.height * .23,
             flexibleSpace: Hero(
-              tag: "image:${controller.product.id}",
-              child: Image.network(
-                controller.product.image,
+              tag:
+                  "image:${controller.heroTagAdditon}:${controller.product.id}",
+              child: CachedNetworkImage(
+                imageUrl: controller.product.image,
                 fit: BoxFit.fill,
+                placeholder: (_, __) => const Loading(),
               ),
             ),
             actions: [
@@ -57,7 +61,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       SizedBox(
                         width: double.infinity,
                         child: Hero(
-                          tag: "name:${controller.product.id}",
+                          tag:
+                              "name:${controller.heroTagAdditon}:${controller.product.id}",
                           child: Text(
                             controller.product.name,
                             style: Get.textTheme.headline2,
@@ -69,7 +74,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       SizedBox(
                         width: double.infinity,
                         child: Hero(
-                          tag: "brand:${controller.product.id}",
+                          tag:
+                              "brand:${controller.heroTagAdditon}:${controller.product.id}",
                           child: Text(
                             controller.product.brand,
                             style: Get.textTheme.headline4,
@@ -114,7 +120,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       SizedBox(
                         width: double.infinity,
                         child: Hero(
-                          tag: "desc:${controller.product.id}",
+                          tag:
+                              "desc:${controller.heroTagAdditon}:${controller.product.id}",
                           child: Text(
                             controller.product.description,
                             style: Get.textTheme.bodyText1,

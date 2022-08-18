@@ -1,8 +1,8 @@
 import 'package:ecommerce_getx/controller/home/account/edit_card_controller.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';
-import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/widgets/auth/custom_textformfield.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
+import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:flutter/material.dart';

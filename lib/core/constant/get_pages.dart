@@ -29,6 +29,7 @@ import 'package:ecommerce_getx/view/screens/home/account/shipping/new_shipping_a
 import 'package:ecommerce_getx/view/screens/home/account/shipping/shipping_address.dart';
 import 'package:ecommerce_getx/view/screens/category_details.dart';
 import 'package:ecommerce_getx/view/screens/home/cart/checkout/checkout.dart';
+import 'package:ecommerce_getx/view/screens/home/explore/best_selling.dart';
 import 'package:ecommerce_getx/view/screens/home/explore/search.dart';
 import 'package:ecommerce_getx/view/screens/product_details.dart';
 import 'package:ecommerce_getx/view/screens/auth/forgot_password.dart';
@@ -47,6 +48,7 @@ class AppRoutes {
   //?Home
   static const home = "/home";
   static const search = "/search";
+  static const bestSelling = "/best-selling";
   //?Cart
   // static const cart = "/cart";
   static const checkout = "/checkout";
@@ -173,6 +175,12 @@ class AppRoutes {
       name: changePassword,
       page: () => const ChangePasswordScreen(),
       binding: BindingsBuilder.put(() => ChangePasswordController()),
+    ),
+    GetPage(
+      name: bestSelling,
+      page: () => const BestSellingScreen(),
+      //?No Need For Controller Here Because It's Initialized At (ExploreScreen)
+      // binding: BindingsBuilder.put(() => BestSellingController()),
     ),
   ];
 }

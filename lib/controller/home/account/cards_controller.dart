@@ -1,7 +1,6 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/data/model/card_model.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CardsController extends GetxController {

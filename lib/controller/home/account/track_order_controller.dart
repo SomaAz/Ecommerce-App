@@ -1,9 +1,14 @@
-import 'package:ecommerce_getx/controller/home/account/orders_controller.dart';
-import 'package:ecommerce_getx/data/model/order_model.dart';
+import 'package:ecommerce_getx/controller/home/account/order_details_controller.dart';
 import 'package:get/get.dart';
 
+import 'package:ecommerce_getx/controller/home/account/orders_controller.dart';
+import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/data/model/order_model.dart';
+
 class TrackOrderController extends GetxController {
-  late OrderModel order;
+  TrackOrderController() : order = Get.arguments;
+
+  OrderModel order;
 
   bool _isRefreshing = false;
   bool get isRefreshing => _isRefreshing;
@@ -15,16 +20,21 @@ class TrackOrderController extends GetxController {
 
   Future<void> refreshData() async {
     setIsRefreshing(true);
+
+    final refreshedOrder = await ordersRepository.getOrderOfId(order.id);
+    order = refreshedOrder;
+
+    final orderDetailsController = Get.find<OrderDetailsController>();
+    orderDetailsController.setOrder(order);
+
     final ordersController = Get.find<OrdersController>();
-    await ordersController.refreshData();
-    order = ordersController.orders
-        .firstWhere((e) => e.id == order.id, orElse: () => order);
+    ordersController.refreshOrder(order);
+
     setIsRefreshing(false);
   }
 
-  @override
-  void onInit() {
-    order = Get.arguments;
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 }

@@ -11,7 +11,12 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: GetBuilder<HomeController>(
         builder: (controller) {
-          return controller.currentScreen;
+          return TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: controller.tabController,
+            children: HomeController.screens,
+          );
+          // return controller.currentScreen;
         },
       ),
       bottomNavigationBar: const AppBottomNavigationBar(),

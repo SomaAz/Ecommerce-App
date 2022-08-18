@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/controller/home/favorites_controller.dart';
+import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/view/widgets/favorited_product_card.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
@@ -39,21 +40,16 @@ class FavoritesScreen extends StatelessWidget {
                   return FavoritedProductCard(
                     controller.favoritedProducts[index],
                     onDelete: () {
-                      Get.defaultDialog(
-                        title: "Alert",
-                        middleText:
-                            "Are You Sure Wan't To Delete This Product From Favorites?",
+                      AppFunctions.showChoiceDialog(
+                        text:
+                            "Are You Sure You Wan't To Delete This Product From Favorites?",
                         onConfirm: () async {
                           await controller
                               .deleteProductFromFavorites(
                                 controller.favoritedProducts[index],
                               )
-                              .then(
-                                (value) => Get.back(),
-                              );
+                              .then((value) => Get.back());
                         },
-                        confirmTextColor: Colors.black,
-                        textCancel: "cancel",
                       );
                     },
                   );

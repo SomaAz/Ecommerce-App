@@ -1,3 +1,4 @@
+import 'package:ecommerce_getx/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_getx/core/service/app_service.dart';
@@ -179,10 +180,23 @@ class AppFunctions {
   }) async {
     await Get.defaultDialog(
       title: title,
+      titleStyle:
+          Get.textTheme.headline3?.copyWith(fontWeight: FontWeight.w500),
       middleText: text,
       onConfirm: onConfirm,
       onCancel: onCancel,
       confirmTextColor: Colors.black,
+      buttonColor: Get.theme.primaryColor,
+      cancelTextColor: Colors.black,
+      cancel: TextButton(
+        onPressed: onCancel ?? Get.back,
+        style: TextButton.styleFrom(primary: AppColors.errorColor),
+        child: const Text("Cancel"),
+      ),
+      confirm: TextButton(
+        onPressed: onConfirm,
+        child: const Text("Ok"),
+      ),
       textCancel: "cancel",
     );
   }

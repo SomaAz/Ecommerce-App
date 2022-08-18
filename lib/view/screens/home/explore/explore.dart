@@ -1,3 +1,4 @@
+import 'package:ecommerce_getx/controller/home/explore/best_selling_controller.dart';
 import 'package:ecommerce_getx/controller/home/explore/explore_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
@@ -63,48 +64,53 @@ class ExploreScreen extends StatelessWidget {
 }
 
 //?-------------------------------- Sections ----------------------------------
-class _BestSellingSection extends GetView<ExploreController> {
+class _BestSellingSection extends StatelessWidget {
   const _BestSellingSection({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle.withWidget(
-          "Best Selling",
-          TextButton(
-              onPressed: () {},
-              child: const Text(
-                "See All",
-                style: TextStyle(fontSize: 18),
-              )),
-        ),
-        const GapH(15),
-        SizedBox(
-          height: productCardHeight,
-          child: GetBuilder<ExploreController>(
-            builder: (controller) {
-              return ListView.separated(
-                padding: const EdgeInsets.only(left: 15),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemCount: controller.bestSellingProducts.length,
-                separatorBuilder: (context, index) {
-                  return const GapW(12);
+    return GetBuilder<BestSellingController>(builder: (controller) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle.withWidget(
+            "Best Selling",
+            TextButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.bestSelling);
                 },
-                itemBuilder: (context, index) {
-                  return ProductCard(controller.bestSellingProducts[index]);
-                },
-              );
-            },
+                child: const Text(
+                  "See All",
+                  style: TextStyle(fontSize: 18),
+                )),
           ),
-        ),
-      ],
-    );
+          const GapH(15),
+          SizedBox(
+            height: productCardHeight,
+            child: ListView.separated(
+              padding: const EdgeInsets.only(left: 15),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: controller.bestSellingProducts.length > 6
+                  ? 6
+                  : controller.bestSellingProducts.length,
+              separatorBuilder: (context, index) {
+                return const GapW(12);
+              },
+              itemBuilder: (context, index) {
+                return ProductCard(
+                  controller.bestSellingProducts[index],
+                  heroTagAddition: "bestSelling",
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    });
   }
 }
 

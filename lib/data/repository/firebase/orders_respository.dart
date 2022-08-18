@@ -8,6 +8,7 @@ abstract class OrdersRepositoryBase {
   Future<void> placeOrder(OrderModel order);
   Future<List<OrderModel>> getAllOrders();
   Future<int> getOrderNumber();
+  Future<OrderModel> getOrderOfId(String id);
 }
 
 class OrdersRepository extends OrdersRepositoryBase {
@@ -29,15 +30,27 @@ class OrdersRepository extends OrdersRepositoryBase {
   }
 
   @override
-  Future<List<OrderModel>> getAllOrders() async {
+  Future<List<OrderModel>> getAllOrders({
+    dynamic startAfterOrderTimeOrdered,
+    int? limit,
+  }) async {
     final userId = FirebaseAuthRepository.firebaseAuth.currentUser!.uid;
-    final snapshot = await _ordersCollection
-        .orderBy("timeOrdered", descending: true)
-        .where("userId", isEqualTo: userId)
-        .get();
 
-    final orders =
-        snapshot.docs.map((doc) => OrderModel.fromMap(doc.data())).toList();
+    var query = _ordersCollection
+        .orderBy("timeOrdered", descending: true)
+        .where("userId", isEqualTo: userId);
+
+    if (limit != null) {
+      query = query.limit(limit);
+    }
+
+    if (startAfterOrderTimeOrdered != null) {
+      query = query.startAfter([startAfterOrderTimeOrdered]);
+    }
+
+    final snapshot = await query.get();
+    final docs = snapshot.docs;
+    final orders = docs.map((doc) => OrderModel.fromMap(doc.data())).toList();
 
     return orders;
   }
@@ -61,5 +74,18 @@ class OrdersRepository extends OrdersRepositoryBase {
     }
 
     return 1;
+  }
+
+  @override
+  Future<OrderModel> getOrderOfId(String id) async {
+    final docRef = _ordersCollection.doc(id);
+
+    final snapshot = await docRef.get();
+
+    if (snapshot.data() != null) {
+      return OrderModel.fromMap(snapshot.data()!);
+    }
+
+    throw "No Order Of ID:$id";
   }
 }

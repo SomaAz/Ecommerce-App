@@ -1,6 +1,6 @@
 import 'package:ecommerce_getx/controller/home/account/track_order_controller.dart';
 import 'package:ecommerce_getx/data/model/order_tracking_model.dart';
-import 'package:ecommerce_getx/view/screens/category_details.dart';
+import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

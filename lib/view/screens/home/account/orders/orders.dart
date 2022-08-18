@@ -1,7 +1,7 @@
 import 'package:ecommerce_getx/controller/home/account/orders_controller.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/data/model/order_model.dart';
-import 'package:ecommerce_getx/view/screens/category_details.dart';
+import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/outlined_custom_button.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +13,15 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<OrdersController>();
+
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          await Get.find<OrdersController>().refreshData();
+          await controller.refreshData();
         },
         child: CustomSliverLayout(
+          controller: controller.scrollController,
           title: "Orders",
           children: [
             GetBuilder<OrdersController>(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/data/model/categoy_model.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,11 @@ class CategoryCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Image.network(category.image),
+                child: CachedNetworkImage(
+                  imageUrl: category.image,
+                  // fit: BoxFit.contain,
+                  placeholder: (_, __) => const ColoredBox(color: Colors.grey),
+                ),
               ),
             ),
           ),
