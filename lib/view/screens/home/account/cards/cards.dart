@@ -1,3 +1,4 @@
+import 'package:awesome_card/awesome_card.dart';
 import 'package:ecommerce_getx/controller/home/account/cards_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
@@ -8,6 +9,7 @@ import 'package:ecommerce_getx/view/widgets/custom_radio.dart';
 import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
+import 'package:ecommerce_getx/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +24,14 @@ class CardsScreen extends StatelessWidget {
         children: [
           GetBuilder<CardsController>(
             builder: (controller) {
-              if (controller.isLoading) return const Loading();
-              if (controller.cards.isEmpty) {
+              // if (controller.isLoading) {
+              //   return SizedBox(
+              //     height: remainingScreenHeight,
+              //     child: const Loading(),
+              //   );
+              // }
+
+              if (controller.cards.isEmpty && !controller.isLoading) {
                 return SizedBox(
                   height: remainingScreenHeight,
                   child: Column(
@@ -51,6 +59,16 @@ class CardsScreen extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 separatorBuilder: (_, __) => const GapH(20),
                 itemBuilder: (context, index) {
+                  if (controller.isLoading) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: ShimmerWidget(
+                        width: double.infinity,
+                        height: Get.height * .24,
+                        borderRadius: 15,
+                      ),
+                    );
+                  }
                   return Get.arguments?['fromCheckout'] != null
                       ? CustomCreditCard.radio(
                           controller.cards[index],
@@ -75,7 +93,7 @@ class CardsScreen extends StatelessWidget {
                           },
                         );
                 },
-                itemCount: controller.cards.length,
+                itemCount: controller.isLoading ? 3 : controller.cards.length,
               );
             },
           ),

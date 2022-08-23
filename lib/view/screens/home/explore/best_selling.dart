@@ -1,4 +1,3 @@
-import 'package:ecommerce_getx/controller/category_details_controller.dart';
 import 'package:ecommerce_getx/controller/home/explore/best_selling_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
@@ -23,13 +22,14 @@ class BestSellingScreen extends StatelessWidget {
           children: [
             GetBuilder<BestSellingController>(
               builder: (controller) {
-                if (controller.isLoading) {
-                  return SizedBox(
-                    height: remainingScreenHeight,
-                    child: const Loading(),
-                  );
-                }
-                if (controller.bestSellingProducts.isEmpty) {
+                // if (controller.isLoading) {
+                //   return SizedBox(
+                //     height: remainingScreenHeight,
+                //     child: const Loading(),
+                //   );
+                // }
+                if (controller.bestSellingProducts.isEmpty &&
+                    !controller.isLoading) {
                   return SizedBox(
                     height: remainingScreenHeight,
                     child: Center(
@@ -45,6 +45,7 @@ class BestSellingScreen extends StatelessWidget {
                     ProductsGrid(
                       controller.bestSellingProducts,
                       productCardHeroTagAddition: "bestSelling",
+                      isLoading: controller.isLoading,
                     ),
                     if (controller.isLoadMoreRunning)
                       const Padding(

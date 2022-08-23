@@ -15,7 +15,7 @@ class ShippingAddressCard extends StatelessWidget {
     this.address, {
     this.onDelete,
     this.onEdit,
-    this.withActions = true,
+    this.haveActions = true,
     Key? key,
   })  : selectedAddress = null,
         onChanged = null,
@@ -30,11 +30,11 @@ class ShippingAddressCard extends StatelessWidget {
     required this.onChanged,
     this.onDelete,
     this.onEdit,
-    this.withActions = true,
+    this.haveActions = true,
     Key? key,
   }) : super(key: key);
 
-  final bool withActions;
+  final bool haveActions;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class ShippingAddressCard extends StatelessWidget {
             onChanged: onChanged!,
             // activeColor: Get.theme.primaryColor,
           ),
-        if (withActions)
+        if (haveActions)
           PopupMenuButton(
             onCanceled: () => log('popup menu button canceled'),
             onSelected: (value) {

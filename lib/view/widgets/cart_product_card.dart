@@ -3,6 +3,7 @@ import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
+import 'package:ecommerce_getx/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,7 @@ class CartProductCard extends StatelessWidget {
   }) : super(key: key);
 
   final CartProductModel cartProduct;
+
   final void Function() onDelete;
   final void Function() onIncrement;
   final void Function() onDecrement;
@@ -34,7 +36,7 @@ class CartProductCard extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: cartProduct.image,
               fit: BoxFit.fill,
-              placeholder: (_, __) => const Loading(),
+              placeholder: (_, __) => const ShimmerWidget(),
             ),
           ),
           const GapW(20),
@@ -67,7 +69,7 @@ class CartProductCard extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
+                          // color: Colors.grey.shade300,
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: FittedBox(

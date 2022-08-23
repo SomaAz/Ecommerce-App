@@ -79,8 +79,9 @@ class OrderModel {
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       id: map['id'] ?? '',
-      status: OrderStatus.values
-          .firstWhere((status) => status.name == map['status']),
+      status: OrderStatus.values.firstWhere(
+        (status) => status.name.toLowerCase() == map['status'].toLowerCase(),
+      ),
       shippingAddress: ShippingAddressModel.fromMap(map['shippingAddress']),
       paymentCard: CardModel.fromMap(map['paymentCard']),
       timeOrdered: map['timeOrdered'],

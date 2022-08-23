@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class AppTheme {
   static const _appBarTheme = AppBarTheme(
@@ -70,4 +71,7 @@ class AppTheme {
     appBarTheme: _appBarTheme,
     textTheme: _textTheme,
   );
+
+  static final appBarTitleStyle =
+      Get.textTheme.headline2?.copyWith(fontWeight: FontWeight.w500);
 }

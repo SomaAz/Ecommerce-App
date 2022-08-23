@@ -31,7 +31,8 @@ class SectionTitle extends StatelessWidget {
         children: [
           Text(
             text,
-            style: Get.textTheme.headline3,
+            style:
+                Get.textTheme.headline3?.copyWith(fontWeight: FontWeight.w500),
           ),
           if (_widget != null) _widget!,
         ],

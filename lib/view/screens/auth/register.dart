@@ -109,6 +109,7 @@ class RegisterScreen extends StatelessWidget {
                               }
                               return null;
                             },
+                            maxLines: 1,
                           ),
                           const GapH(30),
                           controller.isLoading.value

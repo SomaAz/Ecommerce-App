@@ -28,7 +28,7 @@ class TrackOrderController extends GetxController {
     orderDetailsController.setOrder(order);
 
     final ordersController = Get.find<OrdersController>();
-    ordersController.refreshOrder(order);
+    ordersController.setOrder(order);
 
     setIsRefreshing(false);
   }

@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/data/model/categoy_model.dart';
+import 'package:ecommerce_getx/view/widgets/gap.dart';
+import 'package:ecommerce_getx/view/widgets/loading.dart';
+import 'package:ecommerce_getx/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,38 +18,51 @@ class CategoryCard extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          width: Get.height * .09,
-          height: Get.height * .09,
-          child: GestureDetector(
-            onTap: () {
-              // final categoryDetailsGetPage = AppRoutes.getPages.firstWhere(
-              //   (getPage) => getPage.name == AppRoutes.categoryDetails,
-              // );
+        GestureDetector(
+          onTap: () {
+            // final categoryDetailsGetPage = AppRoutes.getPages.firstWhere(
+            //   (getPage) => getPage.name == AppRoutes.categoryDetails,
+            // );
 
-              Get.toNamed(
-                AppRoutes.categoryDetails,
-                arguments: category,
-              );
-            },
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(Get.height),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CachedNetworkImage(
-                  imageUrl: category.image,
-                  // fit: BoxFit.contain,
-                  placeholder: (_, __) => const ColoredBox(color: Colors.grey),
+            Get.toNamed(
+              AppRoutes.categoryDetails,
+              arguments: category,
+            );
+          },
+          child: Container(
+            width: Get.height * .09,
+            height: Get.height * .09,
+            decoration: BoxDecoration(
+              // shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Get.height),
+              // ),
+              boxShadow: const [
+                BoxShadow(
+                  offset: Offset(1, 2),
+                  color: Colors.black12,
+                  blurRadius: 2,
+                  spreadRadius: 0,
+                  // blurStyle: BlurStyle.outer,
                 ),
-              ),
+              ],
+              color: Colors.white,
+            ),
+            padding: const EdgeInsets.all(25.0),
+            child: CachedNetworkImage(
+              imageUrl: category.image,
+              fit: BoxFit.contain,
+              placeholder: (_, __) => const ShimmerWidget(),
             ),
           ),
         ),
+        const GapH(5),
         Text(
-          category.name,
-          style: const TextStyle(fontSize: 14),
+          category.name.capitalizeFirst ?? category.name,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+            color: Colors.black,
+          ),
         ),
       ],
     );

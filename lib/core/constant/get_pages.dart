@@ -90,11 +90,13 @@ class AppRoutes {
       name: register,
       page: () => const RegisterScreen(),
       binding: BindingsBuilder.put(() => RegisterController()),
+      transition: Transition.leftToRight,
     ),
     GetPage(
       name: login,
       page: () => const LoginScreen(),
       binding: BindingsBuilder.put(() => LoginController()),
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: forgotPassword,

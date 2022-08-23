@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
-import 'package:get/get.dart';
 
 abstract class ProductsRepositoryBase {
   Future<List<CartProductModel>> getAllCartProducts();
@@ -38,16 +37,13 @@ class CartsRepository extends ProductsRepositoryBase {
 
   @override
   Future<void> addProductToCart(CartProductModel cartProductModel) async {
-    final mapModel = cartProductModel.toMap();
-
     final ref = _cartCollection.doc(cartProductModel.id.trim());
 
     final snapshot = await ref.get();
     if (snapshot.exists) {
       log("Product Is Already Added To Cart");
     } else {
-      await ref.set(mapModel);
-      Get.snackbar("Success", "Product Has Been Added To Cart");
+      await ref.set(cartProductModel.toMap());
     }
   }
 

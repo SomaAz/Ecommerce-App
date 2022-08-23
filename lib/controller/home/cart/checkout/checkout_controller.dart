@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
+import 'package:ecommerce_getx/controller/home/home_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/core/enums/delivery_type.dart';
 import 'package:ecommerce_getx/core/enums/order_status.dart';
+import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/data/model/card_model.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/data/model/order_model.dart';
@@ -94,17 +96,18 @@ class CheckoutController extends GetxController {
     update();
   }
 
+  //? it returns bool because it check if all fields
+  //? like card and address are added
+  //? & check for errors
   Future<bool> _placeOrder() async {
     if (_selectedShippingAddress == null) {
-      Get.snackbar(
-        "",
+      AppFunctions.showErrorSnackBar(
         "You Have To Add A Shipping Address To Continue Ordering",
       );
       return false;
     }
     if (_selectedCard == null) {
-      Get.snackbar(
-        "",
+      AppFunctions.showErrorSnackBar(
         "You Have To Add A Payment Card To Continue Ordering",
       );
       return false;
@@ -166,7 +169,13 @@ class CheckoutController extends GetxController {
       if (orderPlaced) {
         await Get.find<CartController>().clearCartProducts();
         Get.back();
-        Get.snackbar("Success", "Order Placed Successfully");
+        AppFunctions.showSuccessSnackbar(
+          text: "Order Placed Successfully",
+          onTap: (_) {
+            Get.back(closeOverlays: true);
+            Get.find<HomeController>().navigateToIndex(1);
+          },
+        );
       }
     });
 

@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_getx/controller/product_details_controller.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
+import 'package:ecommerce_getx/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,8 +54,7 @@ class ProductCard extends StatelessWidget {
                         imageUrl: product.image,
                         // imageUrl: "https://i.ibb.co/zmty86W/Mockup3.png",
                         fit: BoxFit.fill,
-                        placeholder: (_, __) =>
-                            const ColoredBox(color: Colors.grey),
+                        placeholder: (_, __) => const ShimmerWidget(),
                       ),
                     ),
                   ),

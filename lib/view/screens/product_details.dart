@@ -4,6 +4,7 @@ import 'package:ecommerce_getx/controller/product_details_controller.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
+import 'package:ecommerce_getx/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               child: CachedNetworkImage(
                 imageUrl: controller.product.image,
                 fit: BoxFit.fill,
-                placeholder: (_, __) => const Loading(),
+                placeholder: (_, __) => const ShimmerWidget(),
               ),
             ),
             actions: [
@@ -167,12 +168,14 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                         text: "Product Is Added",
                         onPressed: () {},
                       )
-                    : CustomButton(
-                        text: "Add",
-                        onPressed: () async {
-                          await controller.addProductToCart();
-                        },
-                      );
+                    : controller.isLoading
+                        ? const Loading()
+                        : CustomButton(
+                            text: "Add",
+                            onPressed: () async {
+                              await controller.addProductToCart();
+                            },
+                          );
               },
             ),
           ],

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/enums/order_status.dart';
 import 'package:ecommerce_getx/data/model/order_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -39,6 +42,8 @@ class OrdersController extends GetxController {
     setIsLoading(true);
     orders = await ordersRepository.getAllOrders(limit: 6);
     setIsLoading(false);
+    scrollController.jumpTo(scrollController.offset + Get.height * .2);
+    scrollController.jumpTo(0);
   }
 
   Future<void> refreshData() async {
@@ -46,7 +51,7 @@ class OrdersController extends GetxController {
     update();
   }
 
-  void refreshOrder(OrderModel newOrder) {
+  void setOrder(OrderModel newOrder) {
     final refreshedOrderIndex = orders.indexWhere((e) => e.id == newOrder.id);
 
     orders[refreshedOrderIndex] = newOrder;
@@ -65,6 +70,7 @@ class OrdersController extends GetxController {
 
       if (fetchedOrders.isNotEmpty) {
         orders.addAll(fetchedOrders);
+        log("Loaded Other ${fetchedOrders.length} Orders");
       } else {
         setHasNextPage(false);
       }
@@ -72,10 +78,22 @@ class OrdersController extends GetxController {
     }
   }
 
+  OrderStatus? ordersStatus;
+
+  void setOrdersStatus(OrderStatus? status) {
+    ordersStatus = status;
+    update();
+  }
+
+  List<OrderModel> get filteredOrders {
+    if (ordersStatus == null) return orders;
+    return orders.where((order) => order.status == ordersStatus).toList();
+  }
+
   @override
   void onInit() {
     loadData();
-    scrollController = ScrollController(initialScrollOffset: productCardHeight);
+    scrollController = ScrollController();
     scrollController.addListener(loadMore);
     super.onInit();
   }

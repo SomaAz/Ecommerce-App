@@ -46,7 +46,7 @@ class CheckoutScreen extends StatelessWidget {
                         )
                       : ShippingAddressCard(
                           controller.selectedShippingAddress!,
-                          withActions: false,
+                          haveActions: false,
                         ),
 
                   const GapH(30),
@@ -64,7 +64,10 @@ class CheckoutScreen extends StatelessWidget {
                           "You Don't Have Any Shipping Address, Add One",
                           style: Get.textTheme.headline6,
                         )
-                      : CustomCreditCard(controller.selectedCard!),
+                      : CustomCreditCard(
+                          controller.selectedCard!,
+                          hideNumber: true,
+                        ),
                   const GapH(35),
                   const SectionTitle(
                     "Delivery",

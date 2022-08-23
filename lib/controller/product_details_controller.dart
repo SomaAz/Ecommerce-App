@@ -2,10 +2,11 @@ import 'dart:developer';
 
 import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
 import 'package:ecommerce_getx/controller/home/favorites_controller.dart';
+import 'package:ecommerce_getx/controller/home/home_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +21,14 @@ class ProductDetailsController extends GetxController {
     if (product.colors.isNotEmpty) selectedColor = product.colors[0].obs;
     // isFavorite = product.favorites
     //     .contains(FirebaseAuthRepository.firebaseAuth.currentUser!.uid);
+  }
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  setIsLoading(bool value) {
+    _isLoading = value;
+    update();
   }
 
   //! That's Not A Real Part Of The App
@@ -60,13 +69,27 @@ class ProductDetailsController extends GetxController {
   Future<void> addProductToCart() async {
     if (!isAddedToCart) {
       try {
-        await cartsRepository.addProductToCart(product.toCartProductModel());
-        //? Refresh Data In The Cart Screen
-        await Get.find<CartController>().refreshData();
-        Get.snackbar("Success", "Product Has Been Added To Cart");
+        setIsLoading(true);
+        await cartsRepository
+            .addProductToCart(product.toCartProductModel())
+            .then(
+          (value) {
+            Get.find<CartController>().cartProducts.add(
+                  product.toCartProductModel(),
+                );
+            AppFunctions.showSuccessSnackbar(
+              text: "Product Has Been Added To Cart",
+              onTap: (_) {
+                Get.back(closeOverlays: true);
+                Get.find<HomeController>().navigateToIndex(1);
+              },
+            );
+          },
+        );
       } catch (e) {
         log(e.toString());
       }
+      setIsLoading(false);
       update();
     }
   }

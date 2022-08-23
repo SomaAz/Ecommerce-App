@@ -22,13 +22,13 @@ class CategoryDetailsScreen extends StatelessWidget {
           children: [
             GetBuilder<CategoryDetailsController>(
               builder: (controller) {
-                if (controller.isLoading) {
-                  return SizedBox(
-                    height: remainingScreenHeight,
-                    child: const Loading(),
-                  );
-                }
-                if (controller.products.isEmpty) {
+                // if (controller.isLoading) {
+                //   return SizedBox(
+                //     height: remainingScreenHeight,
+                //     child: const Loading(),
+                //   );
+                // }
+                if (controller.products.isEmpty && !controller.isLoading) {
                   return SizedBox(
                     height: remainingScreenHeight,
                     child: Center(
@@ -43,6 +43,7 @@ class CategoryDetailsScreen extends StatelessWidget {
                   children: [
                     ProductsGrid(
                       controller.products,
+                      isLoading: controller.isLoading,
                     ),
                     if (controller.isLoadMoreRunning)
                       const Padding(

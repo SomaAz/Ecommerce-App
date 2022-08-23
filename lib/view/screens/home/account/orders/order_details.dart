@@ -1,11 +1,14 @@
 import 'package:ecommerce_getx/controller/home/account/order_details_controller.dart';
+import 'package:ecommerce_getx/core/constant/colors.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/core/enums/delivery_type.dart';
+import 'package:ecommerce_getx/core/enums/order_status.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/custom_credit_card.dart';
 import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/order_product_card.dart';
+import 'package:ecommerce_getx/view/widgets/outlined_custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/shipping_address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,22 +74,25 @@ class OrderDetailsScreen extends StatelessWidget {
                   ),
                   const GapH(25),
                   Text(
-                    "Shipping Address:",
-                    style: Get.textTheme.headline5!
-                        .copyWith(fontWeight: FontWeight.w600),
+                    "Shipping Address",
+                    style: Get.textTheme.headline3!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
-                  const GapH(10),
+                  const GapH(15),
                   SizedBox(
                     width: double.infinity,
-                    child: ShippingAddressCard(order.shippingAddress),
+                    child: ShippingAddressCard(
+                      order.shippingAddress,
+                      haveActions: false,
+                    ),
                   ),
-                  const GapH(25),
+                  const GapH(30),
                   Text(
-                    "Payment Card:",
-                    style: Get.textTheme.headline5!
-                        .copyWith(fontWeight: FontWeight.w600),
+                    "Payment Card",
+                    style: Get.textTheme.headline3!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
-                  const GapH(10),
+                  const GapH(15),
                   CustomCreditCard(
                     order.paymentCard.copyWith(
                       number: order.paymentCard.number.replaceRange(
@@ -95,6 +101,7 @@ class OrderDetailsScreen extends StatelessWidget {
                         "*" * (order.paymentCard.number.length - 7),
                       ),
                     ),
+                    haveActions: false,
                   ),
                   const GapH(25),
                   Row(
@@ -136,12 +143,36 @@ class OrderDetailsScreen extends StatelessWidget {
         builder: (controller) {
           return Container(
             height: Get.statusBarHeight,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            child: CustomButton(
-              text: "Track Order",
-              onPressed: () {
-                Get.toNamed(AppRoutes.trackOrder, arguments: controller.order);
-              },
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (controller.order.status == OrderStatus.processing)
+                  Expanded(
+                    child: OutlinedCustomButton(
+                      text: "Cancel Order",
+                      onPressed: () {
+                        controller.changeOrderStatus(OrderStatus.canceled);
+                      },
+                      color: AppColors.errorColor,
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                    ),
+                  ),
+                if (controller.order.status == OrderStatus.processing)
+                  const GapW(10),
+                Expanded(
+                  child: CustomButton(
+                    text: "Track Order",
+                    onPressed: () {
+                      Get.toNamed(
+                        AppRoutes.trackOrder,
+                        arguments: controller.order,
+                      );
+                    },
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                  ),
+                ),
+              ],
             ),
           );
         },

@@ -91,7 +91,7 @@ class ProductsRepository extends ProductsRepositoryBase {
   @override
   Future<List<String>> getBestSellingProductsIds() async {
     //?Get All Orders To Start Calculating The Best Selling Products
-    final orders = await ordersRepository.getAllOrders();
+    final orders = await ordersRepository.getNotCanceledOrders();
 
     //?Mapping The Orders To Products (With Duplicates)
     final ordersProducts =

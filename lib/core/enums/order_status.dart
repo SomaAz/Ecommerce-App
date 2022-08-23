@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 enum OrderStatus {
-  processing("processing", Colors.orange),
-  delivered("delivered", Colors.green),
-  canceled("canceled", Colors.red);
+  processing("Processing", Colors.orange),
+  delivered("Delivered", Colors.green),
+  canceled("Canceled", Colors.red);
 
   const OrderStatus(this.name, this.color);
   final String name;

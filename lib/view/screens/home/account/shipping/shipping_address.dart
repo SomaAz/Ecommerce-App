@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:ecommerce_getx/controller/home/account/shipping_address_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
+import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/view/widgets/custom_button.dart';
 import 'package:ecommerce_getx/view/widgets/custom_sliver_layout.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
+import 'package:ecommerce_getx/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:ecommerce_getx/view/widgets/shipping_address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,8 +28,9 @@ class ShippingAddressScreen extends StatelessWidget {
           children: [
             GetBuilder<ShippingAddressController>(
               builder: (controller) {
-                if (controller.isLoading) return const Loading();
-                if (controller.addresses.isEmpty) {
+                print(controller.isLoading);
+                // if (controller.isLoading) return const Loading();
+                if (controller.addresses.isEmpty && !controller.isLoading) {
                   return SizedBox(
                     height: remainingScreenHeight,
                     child: Column(
@@ -53,6 +58,24 @@ class ShippingAddressScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (_, __) => const GapH(40),
                   itemBuilder: (context, index) {
+                    if (controller.isLoading) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ShimmerWidget(
+                            width: Get.width *
+                                (AppFunctions.doubleInRange(.4, .7)),
+                            height: 15,
+                          ),
+                          const GapH(12),
+                          ShimmerWidget(
+                            width: Get.width *
+                                (AppFunctions.doubleInRange(.7, .95)),
+                            height: 12,
+                          ),
+                        ],
+                      );
+                    }
                     return Get.arguments?['fromCheckout'] != null
                         ? ShippingAddressCard.radio(
                             controller.addresses[index],
@@ -77,7 +100,9 @@ class ShippingAddressScreen extends StatelessWidget {
                             },
                           );
                   },
-                  itemCount: controller.addresses.length,
+                  itemCount: controller.isLoading
+                      ? Get.height ~/ 70
+                      : controller.addresses.length,
                 );
               },
             ),

@@ -15,13 +15,14 @@ class AppBottomNavigationBar extends StatelessWidget {
           showUnselectedLabels: false,
           showSelectedLabels: false,
           currentIndex: controller.navBarCurrentIndex,
-          onTap: controller.changeNavBarCurrentIndex,
+          onTap: controller.navigateToIndex,
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           // selectedIconTheme:
           //     Get.theme.iconTheme.copyWith(color: Get.theme.primaryColor),
           // unselectedIconTheme:
           //     Get.theme.iconTheme.copyWith(color: Colors.black),
+          unselectedItemColor: Colors.black,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.explore_outlined),

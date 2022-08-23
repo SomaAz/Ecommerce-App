@@ -1,6 +1,7 @@
 import 'package:ecommerce_getx/controller/auth/auth_controller.dart';
 import 'package:ecommerce_getx/controller/home/account/account_controller.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
+import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
 import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -90,8 +91,12 @@ class AccountScreen extends StatelessWidget {
                 _AccountListTile(
                   withTrailing: false,
                   imageName: "Icon_Exit",
-                  onTap: () async {
-                    await Get.find<AuthController>().signOut();
+                  onTap: () {
+                    AppFunctions.showChoiceDialog(
+                      text: "Are You Sure You Want To Logout Of Your Account",
+                      confirmText: "Yes",
+                      onConfirm: Get.find<AuthController>().signOut,
+                    );
                   },
                   title: 'Logout',
                 ),

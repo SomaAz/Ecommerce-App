@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
@@ -30,16 +32,47 @@ class CartController extends GetxController {
     );
   }
 
+  Timer? _incrementOnStoppedPressing;
+  Timer? _decrementOnStoppedPressing;
+
   //? This For Keeping The Value Of Quantity In The Repository Correct
   bool _isDecrementing = false;
 
   Future<void> incrementQuantity(CartProductModel cartProductModel) async {
+    // const duration = Duration(
+    //   milliseconds: 250,
+    // ); // set the duration that you want call search() after that.
+    // if (_incrementOnStoppedPressing != null) {
+    //   _incrementOnStoppedPressing!.cancel(); // clear timer
+    // }
+    // _incrementOnStoppedPressing = Timer(
+    //   duration,
+    //   () async {
     await cartsRepository
         .incrementQuantity(cartProductModel)
         .then((value) => update());
+    // },
+    // );
   }
 
   Future<void> decrementQuantity(CartProductModel cartProductModel) async {
+    // cartProductModel.quantity--;
+    // update();
+
+    // const duration = Duration(
+    //   milliseconds: 250,
+    // ); // set the duration that you want call search() after that.
+    // if (_incrementOnStoppedPressing != null) {
+    //   _incrementOnStoppedPressing!.cancel(); // clear timer
+    // }
+    // _incrementOnStoppedPressing = Timer(
+    //   duration,
+    //   () async {
+    //     await cartsRepository
+    //         .decrementQuantity(cartProductModel)
+    //         .then((value) => update());
+    //   },
+    // );
     if (!_isDecrementing) {
       _isDecrementing = true;
       await cartsRepository
@@ -78,10 +111,8 @@ class CartController extends GetxController {
   }
 
   Future<void> refreshData() async {
-    // setIsRefreshing(true);
     await getCartProducts();
     update();
-    // setIsRefreshing(false);
   }
 
   double get totalPrice {

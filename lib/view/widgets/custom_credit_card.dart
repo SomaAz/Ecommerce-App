@@ -11,6 +11,8 @@ class CustomCreditCard extends StatelessWidget {
     this.showBackSide = false,
     this.onDelete,
     this.onEdit,
+    this.haveActions = true,
+    this.hideNumber = false,
   })  : selectedCard = null,
         onChanged = null,
         _widgetKey = GlobalKey(),
@@ -26,6 +28,8 @@ class CustomCreditCard extends StatelessWidget {
     this.showBackSide = false,
     this.onDelete,
     this.onEdit,
+    this.haveActions = true,
+    this.hideNumber = false,
     required this.selectedCard,
     required this.onChanged,
   })  : _widgetKey = GlobalKey(),
@@ -35,7 +39,8 @@ class CustomCreditCard extends StatelessWidget {
   final bool showBackSide;
   final void Function(CardModel card)? onDelete;
   final void Function(CardModel card)? onEdit;
-
+  final bool haveActions;
+  final bool hideNumber;
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -45,32 +50,32 @@ class CustomCreditCard extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              AppFunctions.showPopupMenu(
-                context: context,
-                widgetKey: _widgetKey,
-                onSelected: (value) {
-                  switch (value) {
-                    case "Delete":
-                      onDelete?.call(card);
-                      break;
-                    case "Edit":
-                      onEdit?.call(card);
-                      break;
-                    default:
-                      return;
-                  }
-                },
-              );
+              if (haveActions) {
+                AppFunctions.showPopupMenu(
+                  context: context,
+                  widgetKey: _widgetKey,
+                  onSelected: (value) {
+                    switch (value) {
+                      case "Delete":
+                        onDelete?.call(card);
+                        break;
+                      case "Edit":
+                        onEdit?.call(card);
+                        break;
+                      default:
+                        return;
+                    }
+                  },
+                );
+              }
             },
             child: CreditCard(
-              cardNumber: AppFunctions.splitCardNumber(card.number),
-              // cardNumber: card.number,
+              cardNumber: hideNumber
+                  ? AppFunctions.splitAndHideCardNumber(card.number)
+                  : AppFunctions.splitCardNumber(card.number),
               cardExpiry: card.expiryDate,
               cardHolderName: card.holder,
               cvv: card.cvv,
-              // bankName: "Axis Bank",
-              // cardType:
-              //     CardType.master, // Optional if you want to override Card Type
               showBackSide: showBackSide,
               frontBackground: CardBackgrounds.black,
               backBackground: CardBackgrounds.white,

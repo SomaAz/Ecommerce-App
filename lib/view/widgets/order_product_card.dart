@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
+import 'package:ecommerce_getx/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,11 +23,10 @@ class OrderProductCard extends StatelessWidget {
             fit: FlexFit.tight,
             flex: 20,
             child: CachedNetworkImage(
-              imageUrl: cartProduct.image,
-              // imageUrl: "https://i.ibb.co/zmty86W/Mockup3.png",
-              fit: BoxFit.fill,
-              placeholder: (_, __) => const ColoredBox(color: Colors.grey),
-            ),
+                imageUrl: cartProduct.image,
+                // imageUrl: "https://i.ibb.co/zmty86W/Mockup3.png",
+                fit: BoxFit.fill,
+                placeholder: (_, __) => const ShimmerWidget()),
           ),
           const GapW(20),
           Flexible(
@@ -35,13 +35,14 @@ class OrderProductCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     cartProduct.name,
                     style: Get.textTheme.headline4,
                   ),
+                  const GapH(20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -28,7 +28,7 @@ class CustomAuthQuestion extends StatelessWidget {
             text: " $buttonText",
             style: TextStyle(
               color: Get.theme.primaryColor,
-              fontWeight: FontWeight.bold,
+              // fontWeight: FontWeight.w400,
               fontSize: 17,
             ),
             recognizer: TapGestureRecognizer()..onTap = onPressed,

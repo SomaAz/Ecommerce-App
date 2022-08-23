@@ -146,6 +146,30 @@ class AppFunctions {
     return newStr;
   }
 
+  static String splitAndHideCardNumber(String cardNumber) {
+    final newCardNumber = cardNumber.trim().replaceAll(" ", "");
+    String newStr = '';
+    const step = 4;
+
+    for (var i = 0; i < newCardNumber.length; i += step) {
+      if (i < newCardNumber.length - step) {
+        newStr += "X" *
+            newCardNumber
+                .substring(
+                  i,
+                  math.min(i + step, newCardNumber.length),
+                )
+                .length;
+        if (i + step < newCardNumber.length) newStr += ' ';
+      } else {
+        newStr += newCardNumber.substring(
+            i, math.min(i + step, newCardNumber.length));
+      }
+    }
+
+    return newStr;
+  }
+
   static void showPopupMenu({
     required BuildContext context,
     required GlobalKey widgetKey,
@@ -177,6 +201,7 @@ class AppFunctions {
     String title = "Alert",
     required void Function() onConfirm,
     void Function()? onCancel,
+    String confirmText = "Ok",
   }) async {
     await Get.defaultDialog(
       title: title,
@@ -195,9 +220,32 @@ class AppFunctions {
       ),
       confirm: TextButton(
         onPressed: onConfirm,
-        child: const Text("Ok"),
+        child: Text(confirmText),
       ),
       textCancel: "cancel",
     );
   }
+
+  static SnackbarController showSuccessSnackbar({
+    String title = "Success",
+    required String text,
+    void Function(GetSnackBar)? onTap,
+  }) {
+    return Get.snackbar(
+      title,
+      text,
+      backgroundColor: Get.theme.primaryColor,
+      colorText: Colors.white,
+      icon: const Icon(
+        Icons.check,
+        color: Colors.white,
+      ),
+      onTap: onTap,
+    );
+  }
+
+  static final _random = math.Random();
+
+  static double doubleInRange(num start, num end) =>
+      _random.nextDouble() * (end - start) + start;
 }

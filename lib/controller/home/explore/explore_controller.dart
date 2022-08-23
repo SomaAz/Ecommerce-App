@@ -31,25 +31,19 @@ class ExploreController extends GetxController {
     );
   }
 
-  Future<void> getBestSellingProducts() async {
-    bestSellingProducts = await productsRepository.getAllProducts().onError(
-      (error, stackTrace) {
-        return [];
-      },
-    );
-  }
-
   Future<void> loadData() async {
     setIsLoading(true);
     await getAllCategories();
-    await getBestSellingProducts();
+    Future.delayed(const Duration(seconds: 5));
+
+    // await getBestSellingProducts();
     setIsLoading(false);
   }
 
   Future<void> refreshData() async {
     // setIsRefreshing(true);
     await getAllCategories();
-    await getBestSellingProducts();
+    // await getBestSellingProducts();
     update();
     // setIsRefreshing(false);
   }

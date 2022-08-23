@@ -42,8 +42,9 @@ class CategoryDetailsController extends GetxController {
     );
 
     products = fetchedProducts;
-
     setIsLoading(false);
+    scrollController.jumpTo(scrollController.offset + productCardHeight);
+    scrollController.jumpTo(0);
   }
 
   Future<void> refreshData() async {
@@ -79,7 +80,7 @@ class CategoryDetailsController extends GetxController {
   @override
   void onInit() async {
     loadData();
-    scrollController = ScrollController(initialScrollOffset: productCardHeight);
+    scrollController = ScrollController();
     scrollController.addListener(loadMore);
     super.onInit();
   }

@@ -25,45 +25,46 @@ class EditProfileScreen extends StatelessWidget {
                 children: [
                   Text(
                     controller.userModel.email,
-                    style: Get.textTheme.headline4,
+                    style: Get.textTheme.headline2
+                        ?.copyWith(fontWeight: FontWeight.w500),
                   ),
                   const GapH(25),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: Get.width * .23,
-                        foregroundImage:
-                            const AssetImage("assets/images/watch.png"),
-                      ),
-                      SizedBox(
-                        width: Get.width * .23 * 2,
-                        height: Get.width * .23 * 2,
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black26,
-                              borderRadius: BorderRadius.circular(Get.height),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Change Image",
-                              style: Get.textTheme.headline5!
-                                  .copyWith(color: Colors.white),
-                            ),
-                            const Icon(Icons.image, color: Colors.white),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Stack(
+                  //   alignment: Alignment.center,
+                  //   children: [
+                  //     CircleAvatar(
+                  //       radius: Get.width * .23,
+                  //       foregroundImage:
+                  //           const AssetImage("assets/images/watch.png"),
+                  //     ),
+                  //     SizedBox(
+                  //       width: Get.width * .23 * 2,
+                  //       height: Get.width * .23 * 2,
+                  //       child: AspectRatio(
+                  //         aspectRatio: 1,
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //             color: Colors.black26,
+                  //             borderRadius: BorderRadius.circular(Get.height),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Center(
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Text(
+                  //             "Change Image",
+                  //             style: Get.textTheme.headline5!
+                  //                 .copyWith(color: Colors.white),
+                  //           ),
+                  //           const Icon(Icons.image, color: Colors.white),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   const GapH(25),
                   Form(
                     key: controller.formKey,
