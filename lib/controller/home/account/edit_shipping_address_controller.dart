@@ -1,5 +1,6 @@
 import 'package:ecommerce_getx/controller/home/account/shipping_address_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/shipping_address_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -41,7 +42,8 @@ class EditShippingAddressController extends GetxController {
       final haveEdits = newAddressModel != shippingAddress;
 
       if (haveEdits) {
-        await shippingAdressRepository.editShippingAddress(newAddressModel);
+        await AppRepositories.shippingAdressRepository
+            .editShippingAddress(newAddressModel);
         await Get.find<ShippingAddressController>().refreshData();
       }
 

@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
@@ -23,7 +24,7 @@ class RegisterController extends GetxController {
     // isLoading.value = false;
 
     if (AppFunctions.validateAndSaveForm(formKey)) {
-      final user = await authRepository
+      final user = await AppRepositories.authRepository
           .register(email, password, username)
           .then((value) {
         setIsLoading(false);

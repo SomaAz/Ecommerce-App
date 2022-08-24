@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/data/model/card_model.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,7 @@ class CardsController extends GetxController {
   }
 
   Future<void> getCurrentUsercards() async {
-    cards = await cardsRepository.getCurrentUserCards();
+    cards = await AppRepositories.cardsRepository.getCurrentUserCards();
     if (cards.isNotEmpty) _selectedCard = cards[0];
   }
 
@@ -37,7 +38,7 @@ class CardsController extends GetxController {
   }
 
   Future<void> _deleteCard(CardModel card) async {
-    await cardsRepository.deleteCard(card).then((value) {
+    await AppRepositories.cardsRepository.deleteCard(card).then((value) {
       //?check if the selected card equals the deleted card
       if (_selectedCard == card) {
         final cardIndex = cards.indexOf(card);

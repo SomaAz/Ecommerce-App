@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/categoy_model.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,7 +37,8 @@ class CategoryDetailsController extends GetxController {
 
   Future<void> loadData() async {
     setIsLoading(true);
-    final fetchedProducts = await productsRepository.getProductsOfCategory(
+    final fetchedProducts =
+        await AppRepositories.productsRepository.getProductsOfCategory(
       category.id,
       limit: 6,
     );
@@ -48,7 +50,8 @@ class CategoryDetailsController extends GetxController {
   }
 
   Future<void> refreshData() async {
-    final refreshedProducts = await productsRepository.getProductsOfCategory(
+    final refreshedProducts =
+        await AppRepositories.productsRepository.getProductsOfCategory(
       category.id,
       limit: products.length,
     );
@@ -62,7 +65,8 @@ class CategoryDetailsController extends GetxController {
     if (hasNextPage && !isLoading && !isLoadMoreRunning && _isExtentAfter) {
       setIsLoadMoreRunning(true);
 
-      final fetchedProducts = await productsRepository.getProductsOfCategory(
+      final fetchedProducts =
+          await AppRepositories.productsRepository.getProductsOfCategory(
         category.id,
         startAfterProductName: products.last.name,
         limit: 6,

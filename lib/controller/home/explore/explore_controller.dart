@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/categoy_model.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,8 @@ class ExploreController extends GetxController {
   // }
 
   Future<void> getAllCategories() async {
-    categories = await categoriesRepository.getAllCategories().onError(
+    categories =
+        await AppRepositories.categoriesRepository.getAllCategories().onError(
       (error, stackTrace) {
         return [];
       },

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -80,7 +81,8 @@ class SearchController extends GetxController {
 
   Future<void> loadData() async {
     setIsSearching(true);
-    final fetchedProducts = await productsRepository.getAllProducts();
+    final fetchedProducts =
+        await AppRepositories.productsRepository.getAllProducts();
     products = fetchedProducts;
     setIsSearching(false);
   }
@@ -109,7 +111,8 @@ class SearchController extends GetxController {
         searchText.isNotEmpty) {
       setIsLoadMoreRunning(true);
 
-      final fetchedProducts = await productsRepository.searchProducts(
+      final fetchedProducts =
+          await AppRepositories.productsRepository.searchProducts(
         searchText,
         startAfterProductName: searchedProducts.last.name,
         limit: 2,

@@ -1,5 +1,6 @@
 import 'package:ecommerce_getx/controller/home/account/shipping_address_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/shipping_address_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -43,6 +44,7 @@ class NewShippingAddressController extends GetxController {
       street: streetController.text,
     );
 
-    await shippingAdressRepository.addShippingAddress(addressModel);
+    await AppRepositories.shippingAdressRepository
+        .addShippingAddress(addressModel);
   }
 }

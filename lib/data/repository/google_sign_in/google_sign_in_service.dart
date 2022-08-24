@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/user_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +20,8 @@ class GoogleSignInService {
           idToken: authentication.idToken,
         );
 
-        final authResult = await authRepository.loginWithCredential(credential);
+        final authResult = await AppRepositories.authRepository
+            .loginWithCredential(credential);
 
         final username = authResult.user!.displayName!;
         final email = authResult.user!.email!;
@@ -31,7 +33,9 @@ class GoogleSignInService {
           image: "",
         );
 
-        await usersRepository.addUserToFirestore(userModel).onError(
+        await AppRepositories.usersRepository
+            .addUserToFirestore(userModel)
+            .onError(
           (error, stackTrace) {
             deleteUser();
           },
@@ -60,7 +64,7 @@ class GoogleSignInService {
     User? user = FirebaseAuthRepository.firebaseAuth.currentUser;
     if (user != null) {
       await user.delete();
-      await authRepository.signOut();
+      await AppRepositories.authRepository.signOut();
     }
   }
 }

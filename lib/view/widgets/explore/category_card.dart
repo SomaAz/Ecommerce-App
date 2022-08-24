@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
 import 'package:ecommerce_getx/data/model/categoy_model.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
-import 'package:ecommerce_getx/view/widgets/loading.dart';
 import 'package:ecommerce_getx/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,10 +19,6 @@ class CategoryCard extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            // final categoryDetailsGetPage = AppRoutes.getPages.firstWhere(
-            //   (getPage) => getPage.name == AppRoutes.categoryDetails,
-            // );
-
             Get.toNamed(
               AppRoutes.categoryDetails,
               arguments: category,
@@ -51,7 +46,9 @@ class CategoryCard extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: category.image,
               fit: BoxFit.contain,
-              placeholder: (_, __) => const ShimmerWidget(),
+              placeholder: (_, __) => const ShimmerWidget(
+                shape: BoxShape.circle,
+              ),
             ),
           ),
         ),

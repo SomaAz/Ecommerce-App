@@ -1,5 +1,6 @@
 import 'package:ecommerce_getx/controller/home/account/cards_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/card_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,7 @@ class EditCardController extends GetxController {
       final haveEdits = newCard != card;
 
       if (haveEdits) {
-        await cardsRepository.editCard(newCard);
+        await AppRepositories.cardsRepository.editCard(newCard);
         await Get.find<CardsController>().refreshData();
       }
 

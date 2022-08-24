@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/controller/home/account/order_details_controller.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:get/get.dart';
 
 import 'package:ecommerce_getx/controller/home/account/orders_controller.dart';
@@ -21,7 +22,8 @@ class TrackOrderController extends GetxController {
   Future<void> refreshData() async {
     setIsRefreshing(true);
 
-    final refreshedOrder = await ordersRepository.getOrderOfId(order.id);
+    final refreshedOrder =
+        await AppRepositories.ordersRepository.getOrderOfId(order.id);
     order = refreshedOrder;
 
     final orderDetailsController = Get.find<OrderDetailsController>();

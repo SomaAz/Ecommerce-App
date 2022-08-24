@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -66,7 +67,9 @@ class FirebaseAuthRepository extends FirebaseAuthRepositoryBase {
           image: "",
         );
 
-        await usersRepository.addUserToFirestore(userModel).onError(
+        await AppRepositories.usersRepository
+            .addUserToFirestore(userModel)
+            .onError(
           (error, stackTrace) {
             deleteUser(email, password);
             user = null;

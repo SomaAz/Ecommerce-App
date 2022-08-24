@@ -1,5 +1,6 @@
 import 'package:ecommerce_getx/controller/home/explore/explore_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:get/get.dart';
 
@@ -23,8 +24,9 @@ class FavoritesController extends GetxController {
   // }
 
   Future<void> getFavoritedProducts() async {
-    favoritedProducts =
-        await favoritesRepository.getAllFavoritedProducts().onError(
+    favoritedProducts = await AppRepositories.favoritesRepository
+        .getAllFavoritedProducts()
+        .onError(
       (error, stackTrace) {
         return [];
       },
@@ -32,7 +34,9 @@ class FavoritesController extends GetxController {
   }
 
   Future<void> deleteProductFromFavorites(ProductModel productModel) async {
-    await favoritesRepository.deleteProductFromFavorites(productModel).then(
+    await AppRepositories.favoritesRepository
+        .deleteProductFromFavorites(productModel)
+        .then(
       (value) {
         favoritedProducts.remove(productModel);
         update();

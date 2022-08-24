@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,9 @@ class LoginController extends GetxController {
     if (AppFunctions.validateAndSaveForm(formKey)) {
       User? user;
 
-      user = await authRepository.login(email, password).then((value) {
+      user = await AppRepositories.authRepository
+          .login(email, password)
+          .then((value) {
         setIsLoading(false);
         return value;
       }).catchError((error, stackTrace) {

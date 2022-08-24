@@ -3,6 +3,7 @@ import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
 import 'package:ecommerce_getx/controller/home/home_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
 import 'package:ecommerce_getx/core/constant/get_pages.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/core/enums/delivery_type.dart';
 import 'package:ecommerce_getx/core/enums/order_status.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';
@@ -37,8 +38,8 @@ class CheckoutController extends GetxController {
   ShippingAddressModel? get selectedShippingAddress => _selectedShippingAddress;
 
   Future<void> setSelectedShippingAddress() async {
-    _selectedShippingAddress =
-        (await shippingAdressRepository.getCurrentUserFirstShippingAddress());
+    _selectedShippingAddress = (await AppRepositories.shippingAdressRepository
+        .getCurrentUserFirstShippingAddress());
   }
 
   Future<void> changeSelectedUserAddress() async {
@@ -57,7 +58,8 @@ class CheckoutController extends GetxController {
   CardModel? get selectedCard => _selectedCard;
 
   Future<void> setSelectedCard() async {
-    _selectedCard = (await cardsRepository.getCurrentUserFirstCard())!;
+    _selectedCard =
+        (await AppRepositories.cardsRepository.getCurrentUserFirstCard())!;
   }
 
   Future<void> changeSelectedUserCard() async {
@@ -156,7 +158,7 @@ class CheckoutController extends GetxController {
       trackings: starterTrackings,
     );
     // await Future.delayed(const Duration(seconds: 2));
-    return await ordersRepository
+    return await AppRepositories.ordersRepository
         .placeOrder(orderModel)
         .then((value) => true)
         .catchError((error, stackTrace) => false);

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/shipping_address_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 
@@ -16,7 +17,7 @@ class ShippingAddressRepository extends ShippingAddressRepositoryBase {
       ShippingAddressRepository._();
   ShippingAddressRepository._();
 
-  final _shippingAdressessCollectionRef = firestore
+  final _shippingAdressessCollectionRef = AppRepositories.firestore
       .collection("users")
       .doc(FirebaseAuthRepository.firebaseAuth.currentUser!.uid.trim())
       .collection("shippingAddresses");

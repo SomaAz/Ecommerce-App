@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 
@@ -18,7 +19,7 @@ class CartsRepository extends ProductsRepositoryBase {
   static final CartsRepository instance = CartsRepository._();
   CartsRepository._();
 
-  final _cartCollection = firestore
+  final _cartCollection = AppRepositories.firestore
       .collection("users")
       .doc(FirebaseAuthRepository.firebaseAuth.currentUser!.uid)
       .collection("cart");
@@ -77,7 +78,7 @@ class CartsRepository extends ProductsRepositoryBase {
   @override
   Future<void> clearProducts() async {
     final snapshot = await _cartCollection.get();
-    final batch = firestore.batch();
+    final batch = AppRepositories.firestore.batch();
     for (final doc in snapshot.docs) {
       batch.delete(doc.reference);
     }

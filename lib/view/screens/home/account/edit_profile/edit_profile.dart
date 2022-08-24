@@ -23,12 +23,12 @@ class EditProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               child: Column(
                 children: [
-                  Text(
-                    controller.userModel.email,
-                    style: Get.textTheme.headline2
-                        ?.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                  const GapH(25),
+                  // Text(
+                  //   controller.userModel.email,
+                  //   style: Get.textTheme.headline2
+                  //       ?.copyWith(fontWeight: FontWeight.w500),
+                  // ),
+                  // const GapH(25),
                   // Stack(
                   //   alignment: Alignment.center,
                   //   children: [

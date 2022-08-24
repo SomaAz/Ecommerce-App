@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/core/enums/order_status.dart';
 import 'package:ecommerce_getx/data/model/order_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
@@ -18,7 +19,7 @@ class OrdersRepository extends OrdersRepositoryBase {
   static final OrdersRepository instance = OrdersRepository._();
   OrdersRepository._();
 
-  final _ordersCollection = firestore.collection("orders");
+  final _ordersCollection = AppRepositories.firestore.collection("orders");
 
   @override
   Future<void> placeOrder(OrderModel order) async {

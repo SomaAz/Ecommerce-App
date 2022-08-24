@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/core/enums/order_status.dart';
 import 'package:ecommerce_getx/data/model/order_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,14 +41,15 @@ class OrdersController extends GetxController {
 
   Future<void> loadData() async {
     setIsLoading(true);
-    orders = await ordersRepository.getAllOrders(limit: 6);
+    orders = await AppRepositories.ordersRepository.getAllOrders(limit: 6);
     setIsLoading(false);
     scrollController.jumpTo(scrollController.offset + Get.height * .2);
     scrollController.jumpTo(0);
   }
 
   Future<void> refreshData() async {
-    orders = await ordersRepository.getAllOrders(limit: orders.length);
+    orders = await AppRepositories.ordersRepository
+        .getAllOrders(limit: orders.length);
     update();
   }
 
@@ -63,7 +65,7 @@ class OrdersController extends GetxController {
     if (hasNextPage && !isLoading && !isLoadMoreRunning && _isExtentAfter) {
       setIsLoadMoreRunning(true);
 
-      final fetchedOrders = await ordersRepository.getAllOrders(
+      final fetchedOrders = await AppRepositories.ordersRepository.getAllOrders(
         startAfterOrderTimeOrdered: orders.last.timeOrdered,
         limit: 6,
       );

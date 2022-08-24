@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/card_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 
@@ -15,7 +16,7 @@ class CardsRepository extends CardsRepositoryBase {
   static final CardsRepository instance = CardsRepository._();
   CardsRepository._();
 
-  final _cardsCollectionReference = firestore
+  final _cardsCollectionReference = AppRepositories.firestore
       .collection("users")
       .doc(FirebaseAuthRepository.firebaseAuth.currentUser!.uid.trim())
       .collection("cards");

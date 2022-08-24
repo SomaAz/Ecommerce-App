@@ -4,6 +4,7 @@ import 'package:ecommerce_getx/controller/home/cart/cart_controller.dart';
 import 'package:ecommerce_getx/controller/home/favorites_controller.dart';
 import 'package:ecommerce_getx/controller/home/home_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
@@ -60,7 +61,9 @@ class ProductDetailsController extends GetxController {
   }
 
   Future<void> toggleFavorite() async {
-    await favoritesRepository.toggleFavorite(product).then((value) {
+    await AppRepositories.favoritesRepository
+        .toggleFavorite(product)
+        .then((value) {
       Get.find<FavoritesController>().refreshData();
       update();
     });
@@ -70,7 +73,7 @@ class ProductDetailsController extends GetxController {
     if (!isAddedToCart) {
       try {
         setIsLoading(true);
-        await cartsRepository
+        await AppRepositories.cartsRepository
             .addProductToCart(product.toCartProductModel())
             .then(
           (value) {

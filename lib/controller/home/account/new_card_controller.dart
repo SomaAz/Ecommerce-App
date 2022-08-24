@@ -1,5 +1,6 @@
 import 'package:ecommerce_getx/controller/home/account/cards_controller.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/card_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -39,6 +40,6 @@ class NewCardController extends GetxController {
       cvv: cvvController.text,
     );
 
-    await cardsRepository.addCard(cardModel);
+    await AppRepositories.cardsRepository.addCard(cardModel);
   }
 }

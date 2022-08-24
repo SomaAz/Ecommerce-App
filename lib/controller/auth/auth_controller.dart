@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 import 'package:ecommerce_getx/data/repository/google_sign_in/google_sign_in_service.dart';
 import 'package:ecommerce_getx/view/widgets/gap.dart';
@@ -19,7 +20,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await authRepository.signOut();
+    await AppRepositories.authRepository.signOut();
     if (user.value == null) {
       Get.offNamed(AppRoutes.login);
     }

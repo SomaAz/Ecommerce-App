@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/user_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +15,7 @@ class UsersRepository extends UsersRepositoryBase {
   static final UsersRepository instance = UsersRepository._();
   UsersRepository._();
 
-  static final _usersCollection = firestore.collection("users");
+  static final _usersCollection = AppRepositories.firestore.collection("users");
 
   @override
   Future<void> addUserToFirestore(UserModel userModel) async {

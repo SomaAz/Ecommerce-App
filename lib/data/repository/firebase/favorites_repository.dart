@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 import 'package:ecommerce_getx/data/repository/firebase/auth_repository.dart';
 
@@ -15,7 +16,8 @@ class FavoritesRepository extends ProductsRepositoryBase {
 
   final uid = FirebaseAuthRepository.firebaseAuth.currentUser!.uid;
 
-  static final _productsCollection = firestore.collection("products");
+  static final _productsCollection =
+      AppRepositories.firestore.collection("products");
 
   @override
   Future<List<ProductModel>> getAllFavoritedProducts() async {

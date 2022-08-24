@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';
 import 'package:ecommerce_getx/data/model/cart_product_model.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,8 @@ class CartController extends GetxController {
   // }
 
   Future<void> getCartProducts() async {
-    cartProducts = await cartsRepository.getAllCartProducts().onError(
+    cartProducts =
+        await AppRepositories.cartsRepository.getAllCartProducts().onError(
       (error, stackTrace) {
         return [];
       },
@@ -48,7 +50,7 @@ class CartController extends GetxController {
     // _incrementOnStoppedPressing = Timer(
     //   duration,
     //   () async {
-    await cartsRepository
+    await AppRepositories.cartsRepository
         .incrementQuantity(cartProductModel)
         .then((value) => update());
     // },
@@ -75,7 +77,7 @@ class CartController extends GetxController {
     // );
     if (!_isDecrementing) {
       _isDecrementing = true;
-      await cartsRepository
+      await AppRepositories.cartsRepository
           .decrementQuantity(cartProductModel)
           .then((value) => update());
     }
@@ -86,7 +88,9 @@ class CartController extends GetxController {
     AppFunctions.showChoiceDialog(
       text: "Are Sure You Wan't To Delete This Product From Cart?",
       onConfirm: () {
-        cartsRepository.deleteCartProduct(cartProductModel).then(
+        AppRepositories.cartsRepository
+            .deleteCartProduct(cartProductModel)
+            .then(
           (value) {
             cartProducts.remove(cartProductModel);
             update();
@@ -98,7 +102,7 @@ class CartController extends GetxController {
   }
 
   Future<void> clearCartProducts() async {
-    await cartsRepository.clearProducts().then((value) {
+    await AppRepositories.cartsRepository.clearProducts().then((value) {
       cartProducts.clear();
       update();
     });

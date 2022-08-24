@@ -1,4 +1,5 @@
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_getx/core/functions/functions.dart';
@@ -15,7 +16,9 @@ class ForgotPasswordController extends GetxController {
     final email = emailController.text.trim();
 
     if (AppFunctions.validateAndSaveForm(formKey)) {
-      await authRepository.sendPasswordResetEmail(email).then((value) {
+      await AppRepositories.authRepository
+          .sendPasswordResetEmail(email)
+          .then((value) {
         Get.back();
         Get.snackbar(
           "Notice",

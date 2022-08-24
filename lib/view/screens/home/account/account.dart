@@ -22,18 +22,20 @@ class AccountScreen extends StatelessWidget {
               await controller.refreshData();
             },
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
               children: [
+                const GapH(10),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      radius: Get.width * .16,
-                      backgroundImage:
-                          const AssetImage("assets/images/watch.png"),
-                    ),
-                    const GapW(15),
+                    // CircleAvatar(
+                    //   radius: Get.width * .16,
+                    //   backgroundImage:
+                    //       const AssetImage("assets/images/watch.png"),
+                    // ),
+                    // const GapW(15),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           controller.userModel.username,
@@ -48,7 +50,7 @@ class AccountScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const GapH(70),
+                const GapH(50),
                 _AccountListTile(
                   imageName: "Icon_Edit-Profile",
                   onTap: () {

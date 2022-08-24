@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:ecommerce_getx/core/constant/constants.dart';
+import 'package:ecommerce_getx/core/constant/repositories.dart';
 import 'package:ecommerce_getx/data/model/product_model.dart';
 
 abstract class ProductsRepositoryBase {
@@ -17,7 +18,8 @@ class ProductsRepository extends ProductsRepositoryBase {
   static final ProductsRepository instance = ProductsRepository._();
   ProductsRepository._();
 
-  static final _productsCollection = firestore.collection("products");
+  static final _productsCollection =
+      AppRepositories.firestore.collection("products");
 
   @override
   Future<List<ProductModel>> getAllProducts({
@@ -91,7 +93,8 @@ class ProductsRepository extends ProductsRepositoryBase {
   @override
   Future<List<String>> getBestSellingProductsIds() async {
     //?Get All Orders To Start Calculating The Best Selling Products
-    final orders = await ordersRepository.getNotCanceledOrders();
+    final orders =
+        await AppRepositories.ordersRepository.getNotCanceledOrders();
 
     //?Mapping The Orders To Products (With Duplicates)
     final ordersProducts =
